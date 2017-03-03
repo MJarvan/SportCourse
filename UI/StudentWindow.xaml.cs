@@ -837,6 +837,20 @@ namespace sports_course
                     db.ExecuteNonQuery(updateCC, t);
                 }
             }
+            //更新换课确认
+            if (i == 3)
+            {
+                studentconfirmcontrol = studentconfirmcontrol + 1;
+                DbCommand updateCC = db.GetSqlStringCommond("update Student set ConfirmControl=" + studentconfirmcontrol + "where student.StudentNo =" + studentno);
+                if (t == null)
+                {
+                    db.ExecuteNonQuery(updateCC);
+                }
+                else
+                {
+                    db.ExecuteNonQuery(updateCC, t);
+                }
+            }
         }
 
         /// <summary>
@@ -1545,6 +1559,8 @@ namespace sports_course
             {
                 try
                 {
+                    D1(t, 3);
+
                     i++;
                     t.Commit();
                 }
