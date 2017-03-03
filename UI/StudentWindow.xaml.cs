@@ -862,7 +862,7 @@ namespace sports_course
         private void D2(Trans t, int SportCourseNo,int i)
         {
             DAL.DbHelper db = new DAL.DbHelper();
-            
+            //插入SSC
             if (i == 1)
             {
                 DbCommand insert = db.GetSqlStringCommond("insert into StudentSportCourse values (@StudentNo, @SportCourseNo, @SSChoice)");
@@ -880,6 +880,7 @@ namespace sports_course
                 }
 
             }
+            //更新SSC
             else if (i == 2)
             {
                 DbCommand updateSSC = db.GetSqlStringCommond("update StudentSportCourse set SSChoice= @SSChoice where StudentNo= @StudentNo and SportCourseNo= @SportCourseNo");
@@ -949,29 +950,82 @@ namespace sports_course
         }
 
         /// <summary>
-        /// 插入学生信息到换课表
+        /// 插入学生信息
         /// </summary>
         /// <param name="t"></param>
-        private void D4(Trans t)
+        private void D4(Trans t, int i)
         {
             DAL.DbHelper db = new DAL.DbHelper();
-            DateTime ChangeCreateTime = new DateTime();
-            ChangeCreateTime = DateTime.Now;
-            DbCommand insert = db.GetSqlStringCommond("insert into ChangeCourse values (@StudentNo, @SportCourseNo, @WeekAndWhen, @ChangeChoice, @ChangeCreateTime)");
-
-            db.AddInParameter(insert, "@StudentNo", DbType.Int32, studentno);
-            db.AddInParameter(insert, "@SportCourseNo", DbType.Int32, studentsportcourseno);
-            db.AddInParameter(insert, "@WeekAndWhen", DbType.String, studentsportcoursewaw);
-            db.AddInParameter(insert, "@ChangeChoice", DbType.String, "0");
-            db.AddInParameter(insert, "@ChangeCreateTime", DbType.DateTime, ChangeCreateTime);
-
-            if (t == null)
+            // 插入学生信息到换课表
+            if (i == 1)
             {
-                db.ExecuteNonQuery(insert);
+                DateTime ChangeCreateTime = new DateTime();
+                ChangeCreateTime = DateTime.Now;
+                DbCommand insert = db.GetSqlStringCommond("insert into ChangeCourse values (@StudentNoA, @SportCourseNoA, @WeekAndWhen, @ChangeChoice, @ChangeCreateTime)");
+
+                db.AddInParameter(insert, "@StudentNoA", DbType.Int32, studentno);
+                db.AddInParameter(insert, "@SportCourseNoA", DbType.Int32, studentsportcourseno);
+                db.AddInParameter(insert, "@WeekAndWhen", DbType.String, studentsportcoursewaw);
+                db.AddInParameter(insert, "@ChangeChoice", DbType.String, "0");
+                db.AddInParameter(insert, "@ChangeCreateTime", DbType.DateTime, ChangeCreateTime);
+
+                if (t == null)
+                {
+                    db.ExecuteNonQuery(insert);
+                }
+                else
+                {
+                    db.ExecuteNonQuery(insert, t);
+                }
             }
-            else
+            // 插入学生信息到换课确认表
+            if(i == 2)
             {
-                db.ExecuteNonQuery(insert, t);
+                DateTime ConfirmCreateTime = new DateTime();
+                ConfirmCreateTime = DateTime.Now;
+                DbCommand insert = db.GetSqlStringCommond("insert into ChangeCourse values (@StudentNoB, @SportCourseNoB, @WeekAndWhen, @ConfirmChoice, @ConfirmCreateTime)");
+
+                db.AddInParameter(insert, "@StudentNoA", DbType.Int32, studentno);
+                db.AddInParameter(insert, "@SportCourseNoA", DbType.Int32, studentsportcourseno);
+                db.AddInParameter(insert, "@WeekAndWhen", DbType.String, studentsportcoursewaw);
+                db.AddInParameter(insert, "@ChangeChoice", DbType.String, "0");
+                db.AddInParameter(insert, "@ConfirmCreateTime", DbType.DateTime, ConfirmCreateTime);
+
+                if (t == null)
+                {
+                    db.ExecuteNonQuery(insert);
+                }
+                else
+                {
+                    db.ExecuteNonQuery(insert, t);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 更新学生换课表的学生信息
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="i"></param>
+        private void D5(Trans t, int i)
+        {
+            DAL.DbHelper db = new DAL.DbHelper();
+
+            //更新换课表之已收到换课确认请求
+            if (i == 1)
+            {
+                DbCommand updateCC = db.GetSqlStringCommond("update ChangeCourse set ChangeChoice= @ChangeChoice where StudentNo= @StudentNo and SportCourseNo= @SportCourseNo");
+                db.AddInParameter(updateCC, "@StudentNo", DbType.Int32, studentno);
+                db.AddInParameter(updateCC, "@SportCourseNo", DbType.Int32, studentsportcourseno);
+                db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "1");
+                if (t == null)
+                {
+                    db.ExecuteNonQuery(updateCC);
+                }
+                else
+                {
+                    db.ExecuteNonQuery(updateCC, t);
+                }
             }
         }
 
@@ -1458,7 +1512,7 @@ namespace sports_course
                 {
                     D1(t,2);
                     D2(t, studentsportcourseno, 2);
-                    D4(t);
+                    D4(t,1);
                     i++;
                     t.Commit();
                 }
@@ -1560,7 +1614,9 @@ namespace sports_course
                 try
                 {
                     D1(t, 3);
-
+                    D2(t, studentsportcourseno, 2);
+                    D4(t, 2);
+                    D5(t, 1);
                     i++;
                     t.Commit();
                 }
@@ -1571,6 +1627,8 @@ namespace sports_course
             }
             return i;
         }
+
+
         #endregion
 
         #endregion
