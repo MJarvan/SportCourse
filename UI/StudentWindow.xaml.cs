@@ -271,7 +271,8 @@ namespace sports_course
                     change.IsSelected = true;
                     AddStudentInfo();
                     AddSSC();
-                    AddChange();
+                    int studentmajor = GetStudentMajorNo();
+                    AddChange(studentmajor);
                 }
                 else
                 {
@@ -387,7 +388,7 @@ namespace sports_course
         /// <summary>
         /// 加载换课信息
         /// </summary>
-        private void AddChange()
+        private void AddChange(int studentmajor)
         {
             viewchange.Clear();
 
@@ -399,7 +400,26 @@ namespace sports_course
             viewchange = db.ExecuteDataTable(selectSCC);
             changeconfirm.ItemsSource = viewchange.DefaultView;
             #endregion
+            int RowsCount = viewchange.Rows.Count;
 
+            //删掉体育选课与课表重复时间的行
+            for (int a = 0; a < RowsCount; a++)
+            {
+                for (int b = 0; b < majorcourse.Count; b++)
+                {
+
+                    if (studentmajor == majorcourse[b].Majorno)
+                    {
+                        if (viewchange.Rows[a]["WeekAndWhen"].ToString().Trim() == majorcourse[b].Weekandwhen.Trim())
+                        {
+                            viewchange.Rows[a].Delete();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            viewchange.AcceptChanges();
             #region 改正字符类型
 
             DataRow[] waw = viewchange.Select("WeekAndWhen>9");
@@ -1539,7 +1559,8 @@ namespace sports_course
         /// <param name="e"></param>
         private void refreshsended_Click(object sender, RoutedEventArgs e)
         {
-            AddChange();
+            int studentmajor = GetStudentMajorNo();
+            AddChange(studentmajor);
         }
 
         /// <summary>
@@ -1574,6 +1595,7 @@ namespace sports_course
             int num = 0;
             DataRowView dr = (DataRowView)changeconfirm.SelectedItem;
             int StudentNo = (int)dr.Row["StudentNo_A"];
+            int SportCourseNo = (int)dr.Row["SportCourseNo_A"];
 
             if (dr == null)
             {
@@ -1585,17 +1607,22 @@ namespace sports_course
                 MessageBox.Show("您不能对自己进行换课!");
                 return;
             }
+            else if (studentsportcourseno == SportCourseNo)
+            {
+                MessageBox.Show("您已经有这节课了!");
+                return;
+            }
             else
             {
-                int SportCourseNo = (int)dr.Row["SportCourseNo"];
-                num = DoChangeBussiness(StudentNo, SportCourseNo);
+                MessageBox.Show("可");
+
+                //num = DoChangeBussiness(StudentNo, SportCourseNo);
             }
 
             if (num == 1)
             {
-                dr.Delete();
-                dt.AcceptChanges();
                 MessageBox.Show("发送换课确认成功!");
+                return;
             }
             else
             {
@@ -1627,7 +1654,6 @@ namespace sports_course
             }
             return i;
         }
-
 
         #endregion
 

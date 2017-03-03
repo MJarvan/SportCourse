@@ -111,21 +111,21 @@ namespace sports_course
             {
                 SSC_Loaded();
                 Random.Visibility = Visibility.Collapsed;
-                Drop.Visibility = Visibility.Visible;
+                DropCourse.Visibility = Visibility.Visible;
                 OpenChoice.Visibility = Visibility.Collapsed;
                 CloseChoice.Visibility = Visibility.Collapsed;
             }
             else if (control[0].Choicecontrol == 1)
             {
                 Random.Visibility = Visibility.Visible;
-                Drop.Visibility = Visibility.Collapsed;
+                DropCourse.Visibility = Visibility.Collapsed;
                 OpenChoice.Visibility = Visibility.Collapsed;
                 CloseChoice.Visibility = Visibility.Visible;
             }
             else
             {
                 Random.Visibility = Visibility.Collapsed;
-                Drop.Visibility = Visibility.Collapsed;
+                DropCourse.Visibility = Visibility.Collapsed;
                 OpenChoice.Visibility = Visibility.Visible;
                 CloseChoice.Visibility = Visibility.Collapsed;
             }
