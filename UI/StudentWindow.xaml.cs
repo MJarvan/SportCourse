@@ -878,7 +878,7 @@ namespace sports_course
                 }
             }
             //更新换课
-            if(i == 2)
+            else if(i == 2)
             {
                 studentchangecontrol = studentchangecontrol + 1;
                 DbCommand updateCC = db.GetSqlStringCommond("update Student set ChangeControl=" + studentchangecontrol + "where student.StudentNo =" + studentno);
@@ -892,7 +892,7 @@ namespace sports_course
                 }
             }
             //更新换课确认
-            if (i == 3)
+            else if (i == 3)
             {
                 studentconfirmcontrol = studentconfirmcontrol + 1;
                 DbCommand updateCC = db.GetSqlStringCommond("update Student set ConfirmControl=" + studentconfirmcontrol + "where student.StudentNo =" + studentno);
@@ -1031,7 +1031,7 @@ namespace sports_course
                 }
             }
             // 插入学生信息到换课确认表
-            if(i == 2)
+            else if(i == 2)
             {
                 DateTime ConfirmCreateTime = new DateTime();
                 ConfirmCreateTime = DateTime.Now;
@@ -1060,25 +1060,83 @@ namespace sports_course
         /// </summary>
         /// <param name="t"></param>
         /// <param name="i"></param>
-        private void D5(Trans t, int studentNo ,int sportcourseNo, int i)
+        private void D5(Trans t, int i)
         {
             DAL.DbHelper db = new DAL.DbHelper();
-
+            DbCommand updateCC = db.GetSqlStringCommond("update ChangeCourse set ChangeChoice= @ChangeChoice where ChangeNo= @ChangeNo");
+            db.AddInParameter(updateCC, "@ChangeNo", DbType.Int32, studentchangeno);
             //更新换课表之已收到换课确认请求
             if (i == 1)
             {
-                DbCommand updateCC = db.GetSqlStringCommond("update ChangeCourse set ChangeChoice= @ChangeChoice where StudentNo_A= @StudentNo_A and SportCourseNo_A= @SportCourseNo_A");
-                db.AddInParameter(updateCC, "@StudentNo_A", DbType.Int32, studentNo);
-                db.AddInParameter(updateCC, "@SportCourseNo_A", DbType.Int32, sportcourseNo);
                 db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "1");
-                if (t == null)
-                {
-                    db.ExecuteNonQuery(updateCC);
-                }
-                else
-                {
-                    db.ExecuteNonQuery(updateCC, t);
-                }
+            }
+            //更新换课表之已接受换课确认请求
+            else if (i == 2)
+            {
+                db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "2");
+            }
+            //更新换课表之已拒绝换课确认请求
+            else if (i == 3)
+            {
+                db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "3");
+            }
+
+            if (t == null)
+            {
+                db.ExecuteNonQuery(updateCC);
+            }
+            else
+            {
+                db.ExecuteNonQuery(updateCC, t);
+            }
+        }
+
+        /// <summary>
+        /// 更新换课确认表操作
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="i"></param>
+        private void D6(Trans t, int i)
+        {
+            DAL.DbHelper db = new DAL.DbHelper();
+            DbCommand updateCC = db.GetSqlStringCommond("update ConfirmCourse set ConfirmChoice= @ConfirmChoice where ConfirmNo= @ConfirmNo");
+            db.AddInParameter(updateCC, "@ConfirmNo", DbType.Int32, studentconfirmno);
+            //更新换课确认表之换课确认请求被已接受
+            if (i == 1)
+            {
+                db.AddInParameter(updateCC, "@ConfirmChoice", DbType.String, "1");
+            }
+            //更新换课确认表之换课确认请求被已拒绝
+            else if (i == 2)
+            {
+                db.AddInParameter(updateCC, "@ConfirmChoice", DbType.String, "2");
+            }
+
+            if (t == null)
+            {
+                db.ExecuteNonQuery(updateCC);
+            }
+            else
+            {
+                db.ExecuteNonQuery(updateCC, t);
+            }
+        }
+
+        /// <summary>
+        /// 将学生A和学生B的课调换
+        /// </summary>
+        /// <param name="t"></param>
+        private void D7(Trans t, int i)
+        {
+            //将同学A的课程信息换成同学B的
+            if (i == 1)
+            {
+
+            }
+            //将同学B的课程信息换成同学A的
+            else if (i == 2)
+            {
+
             }
         }
 
@@ -1099,7 +1157,7 @@ namespace sports_course
             if (studentchoicecontrol > 2)
             {
                 MessageBox.Show("您的选课已经满了");
-                Reset();
+                ResetChoice();
                 viewcourse.IsSelected = true;
             }
             else
@@ -1177,10 +1235,10 @@ namespace sports_course
         /// <param name="e"></param>
         private void choicereset_Click(object sender, RoutedEventArgs e)
         {
-            Reset();
+            ResetChoice();
         }
 
-        private void Reset()
+        private void ResetChoice()
         {
             check = 0;
             DataRow[] select = dt.Select("IsSelected=True");
@@ -1268,7 +1326,7 @@ namespace sports_course
                 if (BLL.StudentSportChoiceNo.SportcoursenoA == (int)row["SportCourseNo"] || BLL.StudentSportChoiceNo.SportcoursenoB == (int)row["SportCourseNo"])
                 {
                     MessageBox.Show("您已经选过该课程!");
-                    Reset();
+                    ResetChoice();
                     return;
                 }
                 else
@@ -1291,7 +1349,7 @@ namespace sports_course
             {
                 MessageBox.Show("已经成功选择"+ a + "门课!");
                 SScourse.Clear();
-                Reset();
+                ResetChoice();
                 int studentmajor = GetStudentMajorNo();
                 AddSportCourse(studentmajor,1);
                 viewcourse.IsSelected = true;
@@ -1661,7 +1719,7 @@ namespace sports_course
 
                 if (i == 1)
                 {
-                    num = DoChangeBussiness(StudentNo, SportCourseNo);
+                    num = DoConfirmBussiness();
                 }
                 else if (i == 0)
                 {
@@ -1709,7 +1767,11 @@ namespace sports_course
 
         #region 数据库操作
 
-        private int DoChangeBussiness(int studentNo, int sportCourseNo)
+        /// <summary>
+        /// 事务判断
+        /// </summary>
+        /// <returns></returns>
+        private int DoConfirmBussiness()
         {
             int i = 0;
             using (DAL.Trans t = new DAL.Trans())
@@ -1719,7 +1781,7 @@ namespace sports_course
                     D1(t, 3);
                     D2(t, studentsportcourseno, 2);
                     D4(t, 2);
-                    D5(t, studentNo, sportCourseNo, 1);
+                    D5(t, 1);
                     i++;
                     t.Commit();
                 }
@@ -1773,6 +1835,9 @@ namespace sports_course
 
         #region 界面逻辑
 
+        /// <summary>
+        /// 确认换课
+        /// </summary>
         private void StartConfirm()
         {
             int num = 0;
@@ -1782,8 +1847,35 @@ namespace sports_course
                 MessageBox.Show("请选中要操作的行!");
                 return;
             }
+
+            studentchangeno = (int)dr.Row["ChangeNo"];
+            studentconfirmno = (int)dr.Row["ConfirmNo"];
+
+            if ((MessageBox.Show("是否确认接受?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
+            {
+                num = DoFinalConfirmBussiness();
+            }
+            else//如果点击“取消”按钮
+            {
+                return;
+            }
+
+            if (num == 1)
+            {
+                MessageBox.Show("换课成功!");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("换课失败!");
+                return;
+            }
         }
 
+
+        /// <summary>
+        /// 拒绝换课
+        /// </summary>
         private void EndConfirm()
         {
             int num = 0;
@@ -1794,6 +1886,7 @@ namespace sports_course
                 return;
             }
 
+            studentchangeno = (int)dr.Row["ChangeNo"];
             studentconfirmno = (int)dr.Row["ConfirmNo"];
 
             if ((MessageBox.Show("是否确认拒绝?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
@@ -1804,16 +1897,75 @@ namespace sports_course
             {
                 return;
             }
+
+            if (num == 1)
+            {
+                MessageBox.Show("拒绝成功!");
+                AddConfirm();
+                return;
+            }
+            else
+            {
+                MessageBox.Show("拒绝失败!");
+                return;
+            }
         }
 
         #endregion
 
         #region 数据库操作
 
+        /// <summary>
+        /// 事务判断
+        /// </summary>
+        /// <returns></returns>
         private int DoRefuseBussiness()
         {
-            throw new NotImplementedException();
+            int i = 0;
+            using (DAL.Trans t = new DAL.Trans())
+            {
+                try
+                {
+                    D5(t, 3);
+                    D6(t, 2);
+                    i++;
+                    t.Commit();
+                }
+                catch
+                {
+                    t.RollBack();
+                }
+            }
+            return i;
         }
+
+        /// <summary>
+        /// 事务判断
+        /// </summary>
+        /// <returns></returns>
+        private int DoFinalConfirmBussiness()
+        {
+            int i = 0;
+            using (DAL.Trans t = new DAL.Trans())
+            {
+                try
+                {
+                    D5(t, 2);
+                    D6(t, 1);
+                    D7(t, 1);
+                    D7(t, 2);
+                    i++;
+                    t.Commit();
+                }
+                catch
+                {
+                    t.RollBack();
+                }
+            }
+            return i;
+        }
+
+
 
         #endregion
 
