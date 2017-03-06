@@ -187,11 +187,24 @@
 
                             <DockPanel>
                                 <TextBlock  Margin="10" FontSize="20" TextAlignment="Left">收到的确认换课请求:</TextBlock>
-                                <Button Name="refreshconfirmed" Width="150" Margin="10" DockPanel.Dock="Right" HorizontalAlignment="Right">刷新换课确认请求</Button>
+                                <Button Name="refreshconfirmed" Width="150" Margin="10" DockPanel.Dock="Right" HorizontalAlignment="Right" Click="refreshconfirmed_Click">刷新换课确认请求</Button>
                             </DockPanel>
-                            <DataGrid Name="receiveconfirm" Height="50" Width="200">
+                            <DataGrid Name="receiveconfirm" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="换课确认编号" IsReadOnly="True" Binding="{Binding Path=ConfirmNo}"/>
+                                    <DataGridTextColumn Header="换课编号" IsReadOnly="True" Binding="{Binding Path=ChangeNo}"/>
+                                    <DataGridTextColumn Header="学号" IsReadOnly="True" Binding="{Binding Path=StudentNo_B}"/>
+                                    <DataGridTextColumn Header="姓名" IsReadOnly="True" Binding="{Binding Path=StudentName}"/>
+                                    <DataGridTextColumn Header="体育课程编号" IsReadOnly="True" Binding="{Binding Path=SportCourseNo_B}"/>
+                                    <DataGridTextColumn Header="体育课程名称" IsReadOnly="True" Binding="{Binding Path=SportCourseName}"/>
+                                    <DataGridTextColumn Header="上课时间" IsReadOnly="True" Binding="{Binding Path=WeekAndWhen}"/>
+                                    <DataGridTextColumn Header="发送时间" IsReadOnly="True" Binding="{Binding Path=ConfirmCreateTime}" Width ="*"/>
+                                </DataGrid.Columns>
                             </DataGrid>
-                            <Button Name="confirmchangecourse" Width="150" Margin="10" HorizontalAlignment="Right">确认换课</Button>
+                            <WrapPanel HorizontalAlignment="Right">
+                                <Button Name="confirmchangecourse" Width="150" Margin="10" HorizontalAlignment="Right" Click="confirmchangecourse_Click">确认换课</Button>
+                                <Button Name="refusechangecourse" Width="150" Margin="10" HorizontalAlignment="Right" Click="refusechangecourse_Click">拒绝</Button>
+                            </WrapPanel>
                             <Separator />
                             <DockPanel>
                                 <TextBlock  Margin="10" FontSize="20" TextAlignment="Left">查看换课请求:</TextBlock>
@@ -199,12 +212,14 @@
                             </DockPanel>
                             <DataGrid Name="changeconfirm" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
                                 <DataGrid.Columns>
+                                    <DataGridTextColumn Header="换课编号" IsReadOnly="True" Binding="{Binding Path=ChangeNo}"/>
                                     <DataGridTextColumn Header="学号" IsReadOnly="True" Binding="{Binding Path=StudentNo_A}"/>
                                     <DataGridTextColumn Header="姓名" IsReadOnly="True" Binding="{Binding Path=StudentName}"/>
-                                    <DataGridTextColumn Header="体育课程编号" IsReadOnly="True" Binding="{Binding Path=SportCourseNo_A}"  />
-                                    <DataGridTextColumn Header="体育课程名称" IsReadOnly="True" Binding="{Binding Path=SportCourseName}" />
-                                    <DataGridTextColumn Header="时间" IsReadOnly="True" Binding="{Binding Path=WeekAndWhen}"/>
-                                    <DataGridTextColumn Header="发送时间" IsReadOnly="True" Binding="{Binding Path=ChangeCreateTime}"  Width ="*"/>
+                                    <DataGridTextColumn Header="体育课程编号" IsReadOnly="True" Binding="{Binding Path=SportCourseNo_A}"/>
+                                    <DataGridTextColumn Header="体育课程名称" IsReadOnly="True" Binding="{Binding Path=SportCourseName}"/>
+                                    <DataGridTextColumn Header="上课时间" IsReadOnly="True" Binding="{Binding Path=WeekAndWhen}"/>
+                                    <DataGridTextColumn Header="发送时间" IsReadOnly="True" Binding="{Binding Path=ChangeCreateTime}"/>
+                                    <DataGridTextColumn Header="专业编号" IsReadOnly="True" Binding="{Binding Path=MajorNo}" Width ="*"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                             <Button Name="sendconfirm" Width="150" Margin="10" HorizontalAlignment="Right" Click="sendconfirm_Click">发送换课确认请求</Button>

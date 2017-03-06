@@ -60,11 +60,6 @@
     <Compile Include="BLL\SSCCompare.cs" />
     <Compile Include="BLL\StudentSportChoiceNo.cs" />
     <Compile Include="DAL\CommonEqualityComparer.cs" />
-    <Compile Include="DB\TblChangeCourse.cs" />
-    <Compile Include="DB\TblConfirmCourse.cs" />
-    <Compile Include="DB\TblDropSportCourse.cs" />
-    <Compile Include="DB\TblMainCourse.cs" />
-    <Compile Include="DB\TblMajor.cs" />
     <Compile Include="DB\TblManager.cs" />
     <Compile Include="DB\TblSportCourse.cs" />
     <Compile Include="DB\TblStudent.cs" />
@@ -72,9 +67,7 @@
     <Compile Include="BLL\RandomizedAlgorithm.cs" />
     <Compile Include="DAL\DbHelper.cs" />
     <Compile Include="DB\TblStudentSportCourse.cs" />
-    <Compile Include="DB\TblTeacher.cs" />
     <Compile Include="DB\ViewMajorMainCourse.cs" />
-    <Compile Include="DB\ViewStudentChangeCourse.cs" />
     <Compile Include="DB\ViewStudentSportCourse.cs" />
     <Compile Include="UI\StudentWindow.xaml.cs">
       <DependentUpon>StudentWindow.xaml</DependentUpon>
