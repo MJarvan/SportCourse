@@ -56,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BLL\DoBussiness.cs" />
     <Compile Include="BLL\JudgeWAW.cs" />
     <Compile Include="BLL\SSCCompare.cs" />
     <Compile Include="BLL\StudentSportChoiceNo.cs" />

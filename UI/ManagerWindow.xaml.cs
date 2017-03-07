@@ -487,9 +487,9 @@ namespace sports_course
                 {
                     if (result[k].Ssno == (int)dt.Rows[j]["SSNo"])
                     {
-                        int SSno = (int)dt.Rows[j]["SSNo"];
+                        int StudentNo = (int)dt.Rows[j]["StudentNo"];
                         int SportCourseNo = (int)dt.Rows[j]["SportCourseNo"];
-                        num = num + DoChoiceBussiness(SSno, SportCourseNo);
+                        num = num + DoChoiceBussiness(StudentNo, SportCourseNo);
                         dt.Rows[j]["SSChoice"] = 1;
                     }
                 }
@@ -516,16 +516,16 @@ namespace sports_course
         /// </summary>
         /// <param name="SSno"></param>
         /// <param name="SportCourseNo"></param>
-        private int DoChoiceBussiness(int SSno ,int SportCourseNo)
+        private int DoChoiceBussiness(int StudentNo, int SportCourseNo)
         {
             int i = 0;
             using (DAL.Trans t = new DAL.Trans())
             {
                 try
                 {
-                    D1(t,SSno);
-                    D2(t, SportCourseNo,1);
-                    D3(t);
+                    BLL.DoBussiness.D1(t, StudentNo, SportCourseNo, 3);
+                    BLL.DoBussiness.D5(t, SportCourseNo,1);
+                    BLL.DoBussiness.D6(t);
                     i = 1;
                     t.Commit();
                 }
@@ -535,91 +535,6 @@ namespace sports_course
                 }
             }
             return i;
-        }
-
-        /// <summary>
-        /// 更新成功选课信息到选课表
-        /// </summary>
-        /// <param name="t"></param>
-        private void D1(Trans t, int SSno)
-        {
-            //更新datatable到数据库
-            DAL.DbHelper db = new DAL.DbHelper();
-            DbCommand updateSSC = db.GetSqlStringCommond("update StudentSportCourse set SSChoice= @SSChoice where SSNo= @SSNo");
-            db.AddInParameter(updateSSC, "@SSNo", DbType.Int32, SSno);
-            db.AddInParameter(updateSSC, "@SSChoice", DbType.String, "1");
-
-            if (t == null)
-            {
-                db.ExecuteNonQuery(updateSSC);
-            }
-            else
-            {
-                db.ExecuteNonQuery(updateSSC, t);
-            }
-        }
-
-        /// <summary>
-        /// 更新体育选课的已选人数
-        /// </summary>
-        /// <param name="t"></param>
-        /// <param name="SportCourseNo"></param>
-        private void D2(Trans t, int SportCourseNo ,int i)
-        {
-            //读取该课程的choicenumafter
-            DAL.DbHelper db = new DAL.DbHelper();
-            int choicenumafter = 0;
-
-            DbCommand selectSC = db.GetSqlStringCommond("select ChoiceNumAfter from SportCourse where SportCourseNo="+ SportCourseNo);
-            using (DbDataReader reader = db.ExecuteReader(selectSC))
-            {
-                while (reader.Read())
-                {
-                    choicenumafter = reader.GetInt32(0);
-                }
-            }
-            //如果是筛选的+1
-            if (i == 1)
-            {
-                choicenumafter = choicenumafter + 1;
-            }
-            //如果是退课的-1
-            else if (i ==3)
-            {
-                choicenumafter = choicenumafter - 1;
-            }
-
-            //把choicenumafter存回去
-            DbCommand updateSC = db.GetSqlStringCommond("update SportCourse set ChoiceNumAfter=" + choicenumafter + "where SportCourseNo=" + SportCourseNo);
-
-            if (t == null)
-            {
-                db.ExecuteNonQuery(updateSC);
-            }
-            else
-            {
-                db.ExecuteNonQuery(updateSC, t);
-            }
-        }
-
-        /// <summary>
-        /// 更新选课控制的选课状态
-        /// </summary>
-        /// <param name="t"></param>
-        private void D3(Trans t)
-        {
-            control[0].Choicecontrol = 2;
-            DAL.DbHelper db = new DAL.DbHelper();
-            DbCommand updateChoice = db.GetSqlStringCommond("update CourseControl set ChoiceControl=" + control[0].Choicecontrol);
-
-            if (t == null)
-            {
-                db.ExecuteNonQuery(updateChoice);
-            }
-            else
-            {
-                db.ExecuteNonQuery(updateChoice, t);
-            }
         }
 
         /// <summary>
@@ -817,9 +732,9 @@ namespace sports_course
             {
                 try
                 {
-                    D4(t, studentNo, sportCourseNo);
-                    D2(t, sportCourseNo, 3);
-                    D5(t, studentNo, sportCourseNo);
+                    BLL.DoBussiness.D1(t, studentNo, sportCourseNo, 4);
+                    BLL.DoBussiness.D5(t, sportCourseNo, 2);
+                    BLL.DoBussiness.D7(t, studentNo, sportCourseNo);
                     i++;
                     t.Commit();
                 }
@@ -831,58 +746,7 @@ namespace sports_course
             return i;
         }
 
-        /// <summary>
-        /// 更新成功退课信息到选课表
-        /// </summary>
-        /// <param name="t"></param>
-        /// <param name="studentNo"></param>
-        /// <param name="sportCourseNo"></param>
-        private void D4(Trans t, int studentNo, int sportCourseNo)
-        {
-            DAL.DbHelper db = new DAL.DbHelper();
 
-            DbCommand updateSSC = db.GetSqlStringCommond("update StudentSportCourse set SSChoice=@SSChoice where SportCourseNo=@SportCourseNo and StudentNo=@StudentNo");
-            db.AddInParameter(updateSSC, "@SportCourseNo", DbType.Int32, sportCourseNo);
-            db.AddInParameter(updateSSC, "@StudentNo", DbType.Int32, studentNo);
-            db.AddInParameter(updateSSC, "@SSChoice", DbType.String, "3");
-
-            if (t == null)
-            {
-                db.ExecuteNonQuery(updateSSC);
-            }
-            else
-            {
-                db.ExecuteNonQuery(updateSSC, t);
-            }
-        }
-
-        /// <summary>
-        /// 生成退课表
-        /// </summary>
-        /// <param name="t"></param>
-        /// <param name="studentNo"></param>
-        /// <param name="sportCourseNo"></param>
-        private void D5(Trans t, int studentNo, int sportCourseNo)
-        {
-            DAL.DbHelper db = new DAL.DbHelper();
-            DateTime DropCreateTime = new DateTime();
-            DropCreateTime = DateTime.Now;
-            DbCommand insert = db.GetSqlStringCommond("insert into DropCourse values (@StudentNo, @SportCourseNo, @DropCreateTime)");
-
-            db.AddInParameter(insert, "@StudentNo", DbType.Int32, studentNo);
-            db.AddInParameter(insert, "@SportCourseNo", DbType.Int32, sportCourseNo);
-            db.AddInParameter(insert, "@DropCreateTime", DbType.DateTime, DropCreateTime);
-
-
-            if (t == null)
-            {
-                db.ExecuteNonQuery(insert);
-            }
-            else
-            {
-                db.ExecuteNonQuery(insert, t);
-            }
-        }
 
         #endregion
 

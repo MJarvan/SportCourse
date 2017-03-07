@@ -11,7 +11,7 @@ namespace sports_course.BLL
     /// </summary>
     public class TimeCount
     {
-        public int time (DateTime startTime)
+        public static int time (DateTime startTime)
         {
             //获取当前时间
             DateTime endTime = new DateTime();

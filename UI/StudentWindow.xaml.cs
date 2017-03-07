@@ -248,6 +248,7 @@ namespace sports_course
                 else
                 {
                     MessageBox.Show("当前选课还未开放!");
+                    return;
                 }
             }
             else if (item == "grabcourse")
@@ -263,6 +264,7 @@ namespace sports_course
                 else
                 {
                     MessageBox.Show("当前抢课还未开放!");
+                    return;
                 }
             }
             else if (item == "changecourse")
@@ -280,13 +282,11 @@ namespace sports_course
                 else
                 {
                     MessageBox.Show("当前换课还未开放!");
+                    return;
                 }
             }
 
         }
-
-
-
 
         /// <summary>
         /// 关闭当前tab页面
@@ -860,7 +860,7 @@ namespace sports_course
         /// 更新学生选课控制
         /// </summary>
         /// <param name="t"></param>
-        private void D1(Trans t, int i)
+        private void UpdateCourseControl(Trans t, int i)
         {
             DAL.DbHelper db = new DAL.DbHelper();
             //更新选课
@@ -908,104 +908,10 @@ namespace sports_course
         }
 
         /// <summary>
-        /// 向学生选课表插入信息
-        /// </summary>
-        /// <param name="t"></param>
-        /// <param name="SportCourseNo"></param>
-        /// <param name="SSChoice"></param>
-        private void D2(Trans t, int SportCourseNo,int i)
-        {
-            DAL.DbHelper db = new DAL.DbHelper();
-            //插入SSC
-            if (i == 1)
-            {
-                DbCommand insert = db.GetSqlStringCommond("insert into StudentSportCourse values (@StudentNo, @SportCourseNo, @SSChoice)");
-
-                db.AddInParameter(insert, "@StudentNo", DbType.Int32, studentno);
-                db.AddInParameter(insert, "@SportCourseNo", DbType.Int32, SportCourseNo);
-                db.AddInParameter(insert, "@SSChoice", DbType.String, "1");
-                if (t == null)
-                {
-                    db.ExecuteNonQuery(insert);
-                }
-                else
-                {
-                    db.ExecuteNonQuery(insert, t);
-                }
-
-            }
-            //更新SSC
-            else if (i == 2)
-            {
-                DbCommand updateSSC = db.GetSqlStringCommond("update StudentSportCourse set SSChoice= @SSChoice where StudentNo= @StudentNo and SportCourseNo= @SportCourseNo");
-                db.AddInParameter(updateSSC, "@StudentNo", DbType.Int32, studentno);
-                db.AddInParameter(updateSSC, "@SportCourseNo", DbType.Int32, SportCourseNo);
-                db.AddInParameter(updateSSC, "@SSChoice", DbType.String, "2");
-                if (t == null)
-                {
-                    db.ExecuteNonQuery(updateSSC);
-                }
-                else
-                {
-                    db.ExecuteNonQuery(updateSSC, t);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 更新学生信息
-        /// </summary>
-        /// <param name="t"></param>
-        /// <param name="sportCourseNo"></param>
-        private void D3(Trans t, int SportCourseNo, int i)
-        {
-            DAL.DbHelper db = new DAL.DbHelper();
-
-            for (int j = 0; j < dt.Rows.Count; j++)
-            {
-                if (SportCourseNo == (int)dt.Rows[j]["SportCourseNo"])
-                {
-                    //更新选课
-                    if (i == 1)
-                    {
-                        int choicenumbefore = (int)dt.Rows[j]["ChoiceNumBefore"];
-                        choicenumbefore = choicenumbefore + 1;
-                        DbCommand updateCNB = db.GetSqlStringCommond("update SportCourse set ChoiceNumBefore=" + choicenumbefore + "where SportCourse.SportCourseNo =" + SportCourseNo);
-
-                        if (t == null)
-                        {
-                            db.ExecuteNonQuery(updateCNB);
-                        }
-                        else
-                        {
-                            db.ExecuteNonQuery(updateCNB, t);
-                        }
-                    }
-                    //更新抢课
-                    else if (i == 2)
-                    {
-                        int choicenumafter = (int)dt.Rows[j]["ChoiceNumAfter"];
-                        choicenumafter = choicenumafter + 1;
-                        DbCommand updateCNA = db.GetSqlStringCommond("update SportCourse set ChoiceNumAfter=" + choicenumafter + "where SportCourse.SportCourseNo =" + SportCourseNo);
-
-                        if (t == null)
-                        {
-                            db.ExecuteNonQuery(updateCNA);
-                        }
-                        else
-                        {
-                            db.ExecuteNonQuery(updateCNA, t);
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// 插入学生信息
         /// </summary>
         /// <param name="t"></param>
-        private void D4(Trans t, int i)
+        private void InsertChangeCourse(Trans t, int i)
         {
             DAL.DbHelper db = new DAL.DbHelper();
             // 插入学生信息到换课表
@@ -1056,87 +962,44 @@ namespace sports_course
         }
 
         /// <summary>
-        /// 更新学生换课表的学生信息
-        /// </summary>
-        /// <param name="t"></param>
-        /// <param name="i"></param>
-        private void D5(Trans t, int i)
-        {
-            DAL.DbHelper db = new DAL.DbHelper();
-            DbCommand updateCC = db.GetSqlStringCommond("update ChangeCourse set ChangeChoice= @ChangeChoice where ChangeNo= @ChangeNo");
-            db.AddInParameter(updateCC, "@ChangeNo", DbType.Int32, studentchangeno);
-            //更新换课表之已收到换课确认请求
-            if (i == 1)
-            {
-                db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "1");
-            }
-            //更新换课表之已接受换课确认请求
-            else if (i == 2)
-            {
-                db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "2");
-            }
-            //更新换课表之已拒绝换课确认请求
-            else if (i == 3)
-            {
-                db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "3");
-            }
-
-            if (t == null)
-            {
-                db.ExecuteNonQuery(updateCC);
-            }
-            else
-            {
-                db.ExecuteNonQuery(updateCC, t);
-            }
-        }
-
-        /// <summary>
-        /// 更新换课确认表操作
-        /// </summary>
-        /// <param name="t"></param>
-        /// <param name="i"></param>
-        private void D6(Trans t, int i)
-        {
-            DAL.DbHelper db = new DAL.DbHelper();
-            DbCommand updateCC = db.GetSqlStringCommond("update ConfirmCourse set ConfirmChoice= @ConfirmChoice where ConfirmNo= @ConfirmNo");
-            db.AddInParameter(updateCC, "@ConfirmNo", DbType.Int32, studentconfirmno);
-            //更新换课确认表之换课确认请求被已接受
-            if (i == 1)
-            {
-                db.AddInParameter(updateCC, "@ConfirmChoice", DbType.String, "1");
-            }
-            //更新换课确认表之换课确认请求被已拒绝
-            else if (i == 2)
-            {
-                db.AddInParameter(updateCC, "@ConfirmChoice", DbType.String, "2");
-            }
-
-            if (t == null)
-            {
-                db.ExecuteNonQuery(updateCC);
-            }
-            else
-            {
-                db.ExecuteNonQuery(updateCC, t);
-            }
-        }
-
-        /// <summary>
         /// 将学生A和学生B的课调换
         /// </summary>
         /// <param name="t"></param>
-        private void D7(Trans t, int i)
+        private void ChangeAandB(Trans t, int StudentNo_B, int SportCourseNo_B, int i)
         {
+            DAL.DbHelper db = new DAL.DbHelper();
+
             //将同学A的课程信息换成同学B的
             if (i == 1)
             {
-
+                DbCommand updateSSC = db.GetSqlStringCommond("update StudentSportCourse set SportCourseNo= @SportCourseNo_B where StudentNo= @StudentNo_A and SportCourseNo= @SportCourseNo_A");
+                db.AddInParameter(updateSSC, "@StudentNo_A", DbType.Int32, studentno);
+                db.AddInParameter(updateSSC, "@SportCourseNo_A", DbType.Int32, studentsportcourseno);
+                db.AddInParameter(updateSSC, "@SportCourseNo_B", DbType.Int32, SportCourseNo_B);
+                if (t == null)
+                {
+                    db.ExecuteNonQuery(updateSSC);
+                }
+                else
+                {
+                    db.ExecuteNonQuery(updateSSC, t);
+                }
             }
             //将同学B的课程信息换成同学A的
             else if (i == 2)
             {
-
+                DbCommand updateSSC = db.GetSqlStringCommond("update StudentSportCourse set SportCourseNo= @SportCourseNo_A where StudentNo= @StudentNo_B and SportCourseNo= @SportCourseNo_B");
+                db.AddInParameter(updateSSC, "@StudentNo_B", DbType.Int32, StudentNo_B);
+                db.AddInParameter(updateSSC, "@SportCourseNo_A", DbType.Int32, studentsportcourseno);
+                db.AddInParameter(updateSSC, "@SportCourseNo_B", DbType.Int32, SportCourseNo_B);
+                if (t == null)
+                {
+                    db.ExecuteNonQuery(updateSSC);
+                }
+                else
+                {
+                    db.ExecuteNonQuery(updateSSC, t);
+                }
             }
         }
 
@@ -1398,9 +1261,9 @@ namespace sports_course
             {
                 try
                 {
-                    D1(t,1);
-                    D2(t, SportCourseNo,1);
-                    D3(t, SportCourseNo,1);
+                    UpdateCourseControl(t, 1);
+                    BLL.DoBussiness.D1(t, studentno, SportCourseNo,1);
+                    BLL.DoBussiness.D2(t, dt, SportCourseNo, 1);
                     t.Commit();
                 }
                 catch
@@ -1524,8 +1387,8 @@ namespace sports_course
             {
                 try
                 {
-                    D2(t,sportCourseNo,1);
-                    D3(t,sportCourseNo,2);
+                    BLL.DoBussiness.D1(t, studentno, sportCourseNo, 1);
+                    BLL.DoBussiness.D2(t, dt, sportCourseNo, 2);
                     i++;
                     t.Commit();
                 }
@@ -1598,6 +1461,8 @@ namespace sports_course
             if (num == 1)
             {
                 MessageBox.Show("换课请求发送成功!");
+                AddChosen();
+                AddInterface();
                 viewcourse.IsSelected = true;
                 change.Visibility = Visibility.Collapsed;
             }
@@ -1621,9 +1486,9 @@ namespace sports_course
             {
                 try
                 {
-                    D1(t,2);
-                    D2(t, studentsportcourseno, 2);
-                    D4(t,1);
+                    UpdateCourseControl(t, 2);
+                    BLL.DoBussiness.D1(t, studentno, studentsportcourseno, 2);
+                    InsertChangeCourse(t, 1);
                     i++;
                     t.Commit();
                 }
@@ -1731,6 +1596,10 @@ namespace sports_course
             if (num == 1)
             {
                 MessageBox.Show("发送换课确认成功!");
+                AddChosen();
+                AddInterface();
+                viewcourse.IsSelected = true;
+                change.Visibility = Visibility.Collapsed;
                 return;
             }
             else
@@ -1778,10 +1647,10 @@ namespace sports_course
             {
                 try
                 {
-                    D1(t, 3);
-                    D2(t, studentsportcourseno, 2);
-                    D4(t, 2);
-                    D5(t, 1);
+                    UpdateCourseControl(t, 3);
+                    BLL.DoBussiness.D1(t, studentno, studentsportcourseno, 2);
+                    InsertChangeCourse(t, 2);
+                    BLL.DoBussiness.D3(t, studentchangeno, 1);
                     i++;
                     t.Commit();
                 }
@@ -1850,10 +1719,12 @@ namespace sports_course
 
             studentchangeno = (int)dr.Row["ChangeNo"];
             studentconfirmno = (int)dr.Row["ConfirmNo"];
+            int StudentNo_B = (int)dr.Row["StudentNo_B"];
+            int SportCourseNo_B = (int)dr.Row["SportCourseNo_B"];
 
             if ((MessageBox.Show("是否确认接受?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
             {
-                num = DoFinalConfirmBussiness();
+                num = DoFinalConfirmBussiness(StudentNo_B, SportCourseNo_B);
             }
             else//如果点击“取消”按钮
             {
@@ -1863,6 +1734,10 @@ namespace sports_course
             if (num == 1)
             {
                 MessageBox.Show("换课成功!");
+                AddChosen();
+                AddInterface();
+                viewcourse.IsSelected = true;
+                change.Visibility = Visibility.Collapsed;
                 return;
             }
             else
@@ -1926,8 +1801,8 @@ namespace sports_course
             {
                 try
                 {
-                    D5(t, 3);
-                    D6(t, 2);
+                    BLL.DoBussiness.D3(t, studentchangeno, 3);
+                    BLL.DoBussiness.D4(t, studentconfirmno, 2);
                     i++;
                     t.Commit();
                 }
@@ -1943,17 +1818,19 @@ namespace sports_course
         /// 事务判断
         /// </summary>
         /// <returns></returns>
-        private int DoFinalConfirmBussiness()
+        private int DoFinalConfirmBussiness(int StudentNo_B, int SportCourseNo_B)
         {
             int i = 0;
             using (DAL.Trans t = new DAL.Trans())
             {
                 try
                 {
-                    D5(t, 2);
-                    D6(t, 1);
-                    D7(t, 1);
-                    D7(t, 2);
+                    BLL.DoBussiness.D3(t, studentchangeno, 2);
+                    BLL.DoBussiness.D4(t, studentconfirmno, 1);
+                    BLL.DoBussiness.D1(t, studentno, studentsportcourseno, 3);
+                    BLL.DoBussiness.D1(t, StudentNo_B, SportCourseNo_B, 3);
+                    ChangeAandB(t, StudentNo_B, SportCourseNo_B, 1);
+                    ChangeAandB(t, StudentNo_B, SportCourseNo_B, 2);
                     i++;
                     t.Commit();
                 }
