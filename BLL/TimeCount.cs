@@ -18,7 +18,7 @@ namespace sports_course.BLL
             endTime = DateTime.Now;
 
             //计算时间差
-            TimeSpan ts = startTime - endTime;
+            TimeSpan ts = endTime - startTime;
             int time;
             time = ((int)ts.TotalMinutes);
 

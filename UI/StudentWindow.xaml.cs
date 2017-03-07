@@ -22,6 +22,8 @@ namespace sports_course
     /// </summary>
     public partial class StudentWindow : Window
     {
+        #region 变量
+
         //数据访问
         List<BLL.CoursecControl> control = new List<BLL.CoursecControl>();
         List<DB.TblStudent> student = new List<DB.TblStudent>();
@@ -48,6 +50,8 @@ namespace sports_course
         public int studentconfirmno { get; set; }
         public int studentsportcourseno { get; set; }
         public string studentsportcoursewaw { get; set; }
+
+        #endregion
 
         public StudentWindow()
         {
@@ -424,7 +428,18 @@ namespace sports_course
                     }
                 }
             }
+            viewchange.AcceptChanges();
 
+            //删掉超时的失效记录
+            for (int i = 0; i <RowsCount; i++)
+            {
+                int num = BLL.TimeCount.time((DateTime)viewchange.Rows[i]["ChangeCreateTime"]);
+
+                if (num  > 10)
+                {
+                    viewchange.Rows[i].Delete();
+                }
+            }
             viewchange.AcceptChanges();
 
             #region 改正字符类型
@@ -453,6 +468,19 @@ namespace sports_course
             viewconfirm = db.ExecuteDataTable(selectSCC);
             receiveconfirm.ItemsSource = viewconfirm.DefaultView;
             #endregion
+            int RowsCount = viewconfirm.Rows.Count;
+
+            //删掉超时的失效记录
+            for (int i = 0; i < RowsCount; i++)
+            {
+                int num = BLL.TimeCount.time((DateTime)viewconfirm.Rows[i]["ConfirmCreateTime"]);
+
+                if (num > 10)
+                {
+                    viewconfirm.Rows[i].Delete();
+                }
+            }
+            viewconfirm.AcceptChanges();
 
             #region 改正字符类型
 
@@ -463,6 +491,7 @@ namespace sports_course
             }
 
             #endregion
+            
         }
 
         /// <summary>

@@ -83,12 +83,29 @@
                     <TabItem Header="删除失效记录">
                         <Grid Background="#FFE5E5E5">
                             <StackPanel>
-                                <DataGrid Name="dropsportcourse" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
+                                <TextBlock Margin="5" TextAlignment="Center" HorizontalAlignment="Left">失效的换课请求</TextBlock>
+                                <DataGrid Name="deletechange" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
                                     <DataGrid.Columns>
-                                        <DataGridCheckBoxColumn/>
+                                        <DataGridTextColumn Header="换课编号" IsReadOnly="True" Binding="{Binding Path=ChangeNo}"/>
+                                        <DataGridTextColumn Header="学号" IsReadOnly="True" Binding="{Binding Path=StudentNo_A}"/>
+                                        <DataGridTextColumn Header="体育课程编号" IsReadOnly="True" Binding="{Binding Path=SportCourseNo_A}"/>
+                                        <DataGridTextColumn Header="上课时间" IsReadOnly="True" Binding="{Binding Path=WeekAndWhen}"/>
+                                        <DataGridTextColumn Header="发送时间" IsReadOnly="True" Binding="{Binding Path=ChangeCreateTime}" Width ="*"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                                <Button Name="Delete" HorizontalAlignment="Right" VerticalAlignment="Bottom">一键删除</Button>
+                                <Button Name="DeleteChange" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="DeleteChange_Click">一键删除</Button>
+                                <Separator />
+                                <DataGrid Name="deleteconfirm" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="换课确认编号" IsReadOnly="True" Binding="{Binding Path=ConfirmNo}"/>
+                                        <DataGridTextColumn Header="换课编号" IsReadOnly="True" Binding="{Binding Path=ChangeNo}"/>
+                                        <DataGridTextColumn Header="学号" IsReadOnly="True" Binding="{Binding Path=StudentNo_B}"/>
+                                        <DataGridTextColumn Header="体育课程编号" IsReadOnly="True" Binding="{Binding Path=SportCourseNo_B}"/>
+                                        <DataGridTextColumn Header="上课时间" IsReadOnly="True" Binding="{Binding Path=WeekAndWhen}"/>
+                                        <DataGridTextColumn Header="发送时间" IsReadOnly="True" Binding="{Binding Path=ConfirmCreateTime}" Width ="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <Button Name="DeleteConfirm" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="DeleteConfirm_Click">一键删除</Button>
                             </StackPanel>
                         </Grid>
                     </TabItem>

@@ -306,6 +306,7 @@ namespace sports_course.BLL
         public static void D8(Trans t , int v)
         {
             DAL.DbHelper db = new DAL.DbHelper();
+            //重置选课
             if(v == 1)
             {
                 DbCommand updateControl = db.GetSqlStringCommond("update Student set ChoiceControl=" + 0);
@@ -318,6 +319,7 @@ namespace sports_course.BLL
                     db.ExecuteNonQuery(updateControl, t);
                 }
             }
+            //重置换课
             else if (v == 2)
             {
                 DbCommand updateControl = db.GetSqlStringCommond("update Student set ChangeControl=" + 0);
@@ -330,6 +332,7 @@ namespace sports_course.BLL
                     db.ExecuteNonQuery(updateControl, t);
                 }
             }
+            //重置换课确认
             else if (v == 3)
             {
                 DbCommand updateControl = db.GetSqlStringCommond("update Student set ConfirmControl=" + 0);
@@ -340,6 +343,41 @@ namespace sports_course.BLL
                 else
                 {
                     db.ExecuteNonQuery(updateControl, t);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除失效记录
+        /// </summary>
+        /// <param name="t"></param>
+        public static void D9(Trans t, int v)
+        {
+            DAL.DbHelper db = new DAL.DbHelper();
+            //删除换课失效记录
+            if (v == 1)
+            {
+                DbCommand delete = db.GetSqlStringCommond("delete from ChangeCourse where ChangeControl!=" + 2);
+                if (t == null)
+                {
+                    db.ExecuteNonQuery(delete);
+                }
+                else
+                {
+                    db.ExecuteNonQuery(delete, t);
+                }
+            }
+            //删除换课确认失效记录
+            else if (v == 2)
+            {
+                DbCommand delete = db.GetSqlStringCommond("delete from ConfirmCourse where ConfirmControl!=" + 1);
+                if (t == null)
+                {
+                    db.ExecuteNonQuery(delete);
+                }
+                else
+                {
+                    db.ExecuteNonQuery(delete, t);
                 }
             }
         }

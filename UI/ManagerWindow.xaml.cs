@@ -23,12 +23,18 @@ namespace sports_course
     /// </summary>
     public partial class ManagerWindow : Window
     {
+        #region 变量
+
         //数据访问
         List<BLL.CoursecControl> control = new List<BLL.CoursecControl>();
         List<DB.TblSportCourse> sportcourse = new List<DB.TblSportCourse>();
         List<BLL.SSCCompare> result = new List<BLL.SSCCompare>();
         DataTable dt = new DataTable();//StudentSportCourse的datatable
         DataTable view = new DataTable();//ViewStudentSportCourse
+        DataTable viewchange = new DataTable();//ChangeCourse的datatable
+        DataTable viewconfirm = new DataTable();//ConfirmCourse的datatable
+
+        #endregion
 
         public ManagerWindow()
         {
@@ -93,6 +99,20 @@ namespace sports_course
                     sportcourse.Add(model);
                 }
             }
+            #endregion
+
+            #region datareader加载换课视图信息
+
+            DbCommand selectSCC1 = db.GetSqlStringCommond("select * from Delete_ChangeCourse");
+            viewchange = db.ExecuteDataTable(selectSCC1);
+            deletechange.ItemsSource = viewchange.DefaultView;
+            #endregion
+
+            #region datareader加载换课视图信息
+
+            DbCommand selectSCC2 = db.GetSqlStringCommond("select * from Delete_ConfirmCourse");
+            viewconfirm = db.ExecuteDataTable(selectSCC2);
+            deleteconfirm.ItemsSource = viewconfirm.DefaultView;
             #endregion
 
             Judge();
@@ -907,6 +927,108 @@ namespace sports_course
         #endregion
 
         #endregion
+
+        #region 一键删除失效记录
+
+        #region 一键删除换课记录
+
+        /// <summary>
+        /// 一键删除换课记录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeleteChange_Click(object sender, RoutedEventArgs e)
+        {
+            int num = 0;
+
+            if(viewchange == null)
+            {
+                MessageBox.Show("没有可以删除的记录!");
+            }
+            else
+            {
+                num = DoDeleteBussiness(1);
+            }
+
+            if (num == 1)
+            {
+                MessageBox.Show("重置成功!");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("重置失败!");
+                return;
+            }
+        }
+
+
+
+
+        #endregion
+
+        #region 一键删除换课确认记录
+
+        /// <summary>
+        /// 一键删除换课确认记录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeleteConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            int num = 0;
+
+            if (viewconfirm == null)
+            {
+                MessageBox.Show("没有可以删除的记录!");
+            }
+            else
+            {
+                num = DoDeleteBussiness(2);
+            }
+
+            if (num == 1)
+            {
+                MessageBox.Show("重置成功!");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("重置失败!");
+                return;
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 事务判断
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        private int DoDeleteBussiness(int v)
+        {
+            int i = 0;
+
+            using (DAL.Trans t = new DAL.Trans())
+            {
+                try
+                {
+                    BLL.DoBussiness.D9(t, v);
+                    i++;
+                    t.Commit();
+                }
+                catch
+                {
+                    t.RollBack();
+                }
+            }
+
+            return i;
+        }
+
+        #endregion
+
 
     }
 }
