@@ -29,7 +29,7 @@ namespace sports_course
         public LoginWindow()
         {
             InitializeComponent();
-            studentBTN.IsChecked = true;
+            managerBTN.IsChecked = true;
         }
 
         /// <summary>
@@ -114,7 +114,18 @@ namespace sports_course
             }
         }
 
-
+        /// <summary>
+        /// 重置登录信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            No.Text = "";
+            Password.Password = "";
+            studentBTN.IsChecked = false;
+            managerBTN.IsChecked = false;
+        }
 
         #region 检验函数
         /// <summary>
@@ -166,19 +177,6 @@ namespace sports_course
             return password;
         }
         #endregion
-
-        /// <summary>
-        /// 重置登录信息
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Reset_Click(object sender, RoutedEventArgs e)
-        {
-            No.Text = "";
-            Password.Password = "";
-            studentBTN.IsChecked = false;
-            managerBTN.IsChecked = false;
-        }
 
         /// <summary>
         /// 加载数据

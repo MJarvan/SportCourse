@@ -381,9 +381,9 @@ namespace sports_course
 
                     model.Studentno = reader.GetInt32(0);
                     model.Studentname = reader.GetString(1).Trim();
-                    model.Changecontrol = reader.GetInt32(3);
-                    model.Confirmcontrol = reader.GetInt32(4);
-                    model.Choicecontrol = reader.GetInt32(5);
+                    model.Choicecontrol = reader.GetInt32(3);
+                    model.Changecontrol = reader.GetInt32(4);
+                    model.Confirmcontrol = reader.GetInt32(5);
                     model.Majorno = reader.GetInt32(6);
                     student.Add(model);
                 }
@@ -1072,7 +1072,7 @@ namespace sports_course
                 }
             }
 
-            //返回
+            //返回换课确认控制
             if (j == 3)
             {
                 for (int i = 0; i < student.Count; i++)

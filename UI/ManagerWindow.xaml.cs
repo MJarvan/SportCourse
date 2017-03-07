@@ -725,6 +725,12 @@ namespace sports_course
             Reset();
         }
 
+        /// <summary>
+        /// 事务判断
+        /// </summary>
+        /// <param name="studentNo"></param>
+        /// <param name="sportCourseNo"></param>
+        /// <returns></returns>
         private int DoDropBussiness(int studentNo, int sportCourseNo)
         {
             int i = 0;
@@ -746,7 +752,159 @@ namespace sports_course
             return i;
         }
 
+        #endregion
 
+        #region 重置选课控制
+
+        #region 重置一个
+
+        /// <summary>
+        /// 重置一个
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ResetControl_Click(object sender, RoutedEventArgs e)
+        {
+            int num = 0;
+
+            if(choiceBTN.IsChecked == true)
+            {
+                if ((MessageBox.Show("是否重置全部学生的选课控制?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
+                {
+                    num = DoResetBussiness(1);
+                }
+                else//如果点击“取消”按钮
+                {
+                    return;
+                }
+            }
+            else if (changeBTN.IsChecked == true)
+            {
+                if ((MessageBox.Show("是否重置全部学生的换课控制?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
+                {
+                    num = DoResetBussiness(2);
+                }
+                else//如果点击“取消”按钮
+                {
+                    return;
+                }
+            }
+            else if (confirmBTN.IsChecked == true)
+            {
+                if ((MessageBox.Show("是否重置全部学生的换课确认控制?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
+                {
+                    num = DoResetBussiness(3);
+                }
+                else//如果点击“取消”按钮
+                {
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("请选择要重置的类型!");
+                return;
+            }
+
+            if (num == 1)
+            {
+                MessageBox.Show("重置成功!");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("重置失败!");
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 事务判断
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        private int DoResetBussiness(int v)
+        {
+            int i = 0;
+
+            using (DAL.Trans t = new DAL.Trans())
+            {
+                try
+                {
+                    BLL.DoBussiness.D8(t, v);
+                    i++;
+                    t.Commit();
+                }
+                catch
+                {
+                    t.RollBack();
+                }
+            }
+
+            return i;
+        }
+        #endregion
+
+        #region 重置全部
+
+        /// <summary>
+        /// 重置全部
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ResetAllControl_Click(object sender, RoutedEventArgs e)
+        {
+            int num = 0;
+
+            if ((MessageBox.Show("是否重置全部学生的全部控制?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
+            {
+                num = DoResetAllBussiness();
+            }
+            else//如果点击“取消”按钮
+            {
+                return;
+            }
+
+            if (num == 1)
+            {
+                MessageBox.Show("重置成功!");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("重置失败!");
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 事务判断
+        /// </summary>
+        /// <returns></returns>
+        private int DoResetAllBussiness()
+        {
+            int i = 0;
+
+            using (DAL.Trans t = new DAL.Trans())
+            {
+                try
+                {
+                    BLL.DoBussiness.D8(t, 1);
+                    BLL.DoBussiness.D8(t, 2);
+                    BLL.DoBussiness.D8(t, 3);
+                    i++;
+                    t.Commit();
+                }
+                catch
+                {
+                    t.RollBack();
+                }
+            }
+
+            return i;
+        }
+
+        #endregion
 
         #endregion
 

@@ -68,14 +68,22 @@
                                     <Button Margin="10" Name="Random" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#FF8CD5DC" Foreground="#FFC93E28" Click="Random_Click" Visibility="Hidden">执行随机选课算法</Button>
                                     <Button Margin="10" Name="DropCourse" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Drop_Click" Visibility="Hidden">退课</Button>
                                 </WrapPanel>
-                                <TextBlock Name="test1" TextWrapping="Wrap"></TextBlock>
+                                <Separator />
+                                <WrapPanel>
+                                    <TextBlock Margin="5" VerticalAlignment="Center" TextAlignment="Center">请选择要重置的属性</TextBlock>
+                                    <RadioButton x:Name="choiceBTN" Margin="5" Content="选课控制 /" VerticalAlignment="Center"/>
+                                    <RadioButton x:Name="changeBTN" Margin="5" Content="换课控制 /" VerticalAlignment="Center"/>
+                                    <RadioButton x:Name="confirmBTN" Margin="5" Content="换课确认控制 " VerticalAlignment="Center"/>
+                                    <Button Margin="5" Name="ResetControl" Visibility="Visible" Click="ResetControl_Click">重置</Button>
+                                    <Button Margin="5" Name="ResetAllControl" Visibility="Visible" Click="ResetAllControl_Click" >全部重置</Button>
+                                </WrapPanel>
                             </StackPanel>
                         </Grid>
                     </TabItem>
                     <TabItem Header="删除失效记录">
                         <Grid Background="#FFE5E5E5">
                             <StackPanel>
-                                <DataGrid x:Name="dropsportcourse" Height="100" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <DataGrid Name="dropsportcourse" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
                                     <DataGrid.Columns>
                                         <DataGridCheckBoxColumn/>
                                     </DataGrid.Columns>

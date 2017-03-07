@@ -298,5 +298,50 @@ namespace sports_course.BLL
                 db.ExecuteNonQuery(insert, t);
             }
         }
+
+        /// <summary>
+        /// 重置所有学生的课程控制
+        /// </summary>
+        /// <param name="t"></param>
+        public static void D8(Trans t , int v)
+        {
+            DAL.DbHelper db = new DAL.DbHelper();
+            if(v == 1)
+            {
+                DbCommand updateControl = db.GetSqlStringCommond("update Student set ChoiceControl=" + 0);
+                if (t == null)
+                {
+                    db.ExecuteNonQuery(updateControl);
+                }
+                else
+                {
+                    db.ExecuteNonQuery(updateControl, t);
+                }
+            }
+            else if (v == 2)
+            {
+                DbCommand updateControl = db.GetSqlStringCommond("update Student set ChangeControl=" + 0);
+                if (t == null)
+                {
+                    db.ExecuteNonQuery(updateControl);
+                }
+                else
+                {
+                    db.ExecuteNonQuery(updateControl, t);
+                }
+            }
+            else if (v == 3)
+            {
+                DbCommand updateControl = db.GetSqlStringCommond("update Student set ConfirmControl=" + 0);
+                if (t == null)
+                {
+                    db.ExecuteNonQuery(updateControl);
+                }
+                else
+                {
+                    db.ExecuteNonQuery(updateControl, t);
+                }
+            }
+        }
     }
 }
