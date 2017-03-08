@@ -43,37 +43,29 @@ namespace sports_course
 
             if (studentBTN.IsChecked == true)
             {
-                if (No.Text.Length != 8)
+                int checkstudentno = Convert.ToInt32(No.Text);
+                string checkstudentpassword = Checkstudentno(checkstudentno);
+                if (checkstudentpassword != "")
                 {
-                    MessageBox.Show("请输入八位数的学号!");
-                    return;
-                }
-                else
-                {
-                    int checkstudentno = Convert.ToInt32(No.Text);
-                    string checkstudentpassword = Checkstudentno(checkstudentno);
-                    if (checkstudentpassword != "")
+                    if (Password.Password == checkstudentpassword)
                     {
-                        if (Password.Password == checkstudentpassword)
-                        {
-                            StudentWindow student = new StudentWindow();
-                            student.studentno = checkstudentno;
-                            student.Show();
-                            this.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("您的密码错误!");
-                            Password.Focus();
-                            return;
-                        }
+                        StudentWindow student = new StudentWindow();
+                        student.studentno = checkstudentno;
+                        student.Show();
+                        this.Close();
                     }
                     else
                     {
-                        MessageBox.Show("该账号不存在!");
-                        No.Focus();
+                        MessageBox.Show("您的密码错误!");
+                        Password.Focus();
                         return;
                     }
+                }
+                else
+                {
+                    MessageBox.Show("该账号不存在!");
+                    No.Focus();
+                    return;
                 }
             }
             #endregion

@@ -357,7 +357,7 @@ namespace sports_course.BLL
             //删除换课失效记录
             if (v == 1)
             {
-                DbCommand delete = db.GetSqlStringCommond("delete from ChangeCourse where ChangeControl!=" + 2);
+                DbCommand delete = db.GetSqlStringCommond("delete from ChangeCourse where ChangeChoice!=" + 2);
                 if (t == null)
                 {
                     db.ExecuteNonQuery(delete);
@@ -370,7 +370,7 @@ namespace sports_course.BLL
             //删除换课确认失效记录
             else if (v == 2)
             {
-                DbCommand delete = db.GetSqlStringCommond("delete from ConfirmCourse where ConfirmControl!=" + 1);
+                DbCommand delete = db.GetSqlStringCommond("delete from ConfirmCourse where ConfirmChoice!=" + 1);
                 if (t == null)
                 {
                     db.ExecuteNonQuery(delete);

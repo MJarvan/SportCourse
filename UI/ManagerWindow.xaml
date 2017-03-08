@@ -16,20 +16,14 @@
                 <Menu Grid.Column="0" x:Name="menu" Height="Auto" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FF1D2874">
                     <MenuItem Header="课程管理">
                         <MenuItem Header="选课">
-                            <MenuItem Name="openchoice" Header="开放选课" Click="Menu_Click" />
-                            <MenuItem Name="closechoice" Header="关闭选课" Click="Menu_Click" />
                         </MenuItem>
                         <Separator />
 
                         <MenuItem Header="抢课">
-                            <MenuItem Name="opengrab" Header="开放抢课" Click="Menu_Click" />
-                            <MenuItem Name="closegrab" Header="关闭抢课" Click="Menu_Click" />
                         </MenuItem>
                         <Separator />
 
                         <MenuItem Header="换课">
-                            <MenuItem Name="openchange" Header="开放换课" Click="Menu_Click" />
-                            <MenuItem Name="closechange" Header="关闭换课" Click="Menu_Click" />
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Name="return" Header="注销" Click="return_Click"></MenuItem>
@@ -93,7 +87,6 @@
                                         <DataGridTextColumn Header="发送时间" IsReadOnly="True" Binding="{Binding Path=ChangeCreateTime}" Width ="*"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                                <Button Name="DeleteChange" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="DeleteChange_Click">一键删除</Button>
                                 <Separator />
                                 <DataGrid Name="deleteconfirm" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
                                     <DataGrid.Columns>
@@ -105,7 +98,7 @@
                                         <DataGridTextColumn Header="发送时间" IsReadOnly="True" Binding="{Binding Path=ConfirmCreateTime}" Width ="*"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                                <Button Name="DeleteConfirm" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="DeleteConfirm_Click">一键删除</Button>
+                                <Button Name="Delete" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Delete_Click">一键删除</Button>
                             </StackPanel>
                         </Grid>
                     </TabItem>

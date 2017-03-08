@@ -29,6 +29,8 @@ namespace sports_course
         List<BLL.CoursecControl> control = new List<BLL.CoursecControl>();
         List<DB.TblSportCourse> sportcourse = new List<DB.TblSportCourse>();
         List<BLL.SSCCompare> result = new List<BLL.SSCCompare>();
+        List<int> ssno = new List<int>();
+
         DataTable dt = new DataTable();//StudentSportCourse的datatable
         DataTable view = new DataTable();//ViewStudentSportCourse
         DataTable viewchange = new DataTable();//ChangeCourse的datatable
@@ -101,23 +103,45 @@ namespace sports_course
             }
             #endregion
 
-            #region datareader加载换课视图信息
+            DeleteChangeCourse();
 
-            DbCommand selectSCC1 = db.GetSqlStringCommond("select * from Delete_ChangeCourse");
-            viewchange = db.ExecuteDataTable(selectSCC1);
-            deletechange.ItemsSource = viewchange.DefaultView;
-            #endregion
+            DeleteConfirmCourse();
 
+            Judge();
+
+            Set();
+        }
+
+        /// <summary>
+        /// 加载换课确认失效记录
+        /// </summary>
+        private void DeleteConfirmCourse()
+        {
+            viewconfirm.Clear();
+
+            DAL.DbHelper db = new DAL.DbHelper();
             #region datareader加载换课视图信息
 
             DbCommand selectSCC2 = db.GetSqlStringCommond("select * from Delete_ConfirmCourse");
             viewconfirm = db.ExecuteDataTable(selectSCC2);
             deleteconfirm.ItemsSource = viewconfirm.DefaultView;
             #endregion
+        }
 
-            Judge();
+        /// <summary>
+        /// 加载换课失效记录
+        /// </summary>
+        private void DeleteChangeCourse()
+        {
+            viewchange.Clear();
 
-            Set();
+            DAL.DbHelper db = new DAL.DbHelper();
+            #region datareader加载换课视图信息
+
+            DbCommand selectSCC1 = db.GetSqlStringCommond("select * from Delete_ChangeCourse");
+            viewchange = db.ExecuteDataTable(selectSCC1);
+            deletechange.ItemsSource = viewchange.DefaultView;
+            #endregion
         }
 
         #region 界面操作
@@ -380,88 +404,6 @@ namespace sports_course
 
             Judge();
             Set();
-        }
-
-
-        /// <summary>
-        /// 菜单栏课程控制
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Menu_Click(object sender, RoutedEventArgs e)
-        {
-            string item = ((MenuItem)sender).Name;
-            youce.Content = "隐藏右侧快捷栏";
-            quick.Visibility = Visibility.Visible;
-            if (item == "openchoice")
-            {
-                if(OpenChoice.IsVisible == true)
-                {
-                    MessageBox.Show("请在快捷栏操作!");
-                }
-                else
-                {
-                    MessageBox.Show("选课已开启!");
-                }
-            }
-            else if (item == "closechoice")
-            {
-                if (CloseChoice.IsVisible == true)
-                {
-                    MessageBox.Show("请在快捷栏操作!");
-                }
-                else
-                {
-                    MessageBox.Show("选课已完成或者已关闭!");
-                }
-            }
-            else if (item == "opengrab")
-            {
-                if (OpenGrab.IsVisible == true)
-                {
-                    MessageBox.Show("请在快捷栏操作!");
-                }
-                else
-                {
-                    MessageBox.Show("抢课已开启!");
-                }
-            }
-            else if (item == "closegrab")
-            {
-                if (CloseGrab.IsVisible == true)
-                {
-                    MessageBox.Show("请在快捷栏操作!");
-                }
-                else
-                {
-                    MessageBox.Show("抢课已完成或者已关闭!");
-                }
-            }
-            else if (item == "openchange")
-            {
-                if (OpenChange.IsVisible == true)
-                {
-                    MessageBox.Show("请在快捷栏操作!");
-                }
-                else
-                {
-                    MessageBox.Show("换课已开启!");
-                }
-            }
-            else if (item == "closechange")
-            {
-                if (CloseChange.IsVisible == true)
-                {
-                    MessageBox.Show("请在快捷栏操作!");
-                }
-                else
-                {
-                    MessageBox.Show("换课已完成或者已关闭!");
-                }
-            }
-
-            Judge();
-
         }
 
         #endregion
@@ -930,83 +872,120 @@ namespace sports_course
 
         #region 一键删除失效记录
 
-        #region 一键删除换课记录
-
         /// <summary>
-        /// 一键删除换课记录
+        /// 一键删除失效记录
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DeleteChange_Click(object sender, RoutedEventArgs e)
+        private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            int num = 0;
+            int numchange = 0;
+            int numconfirm = 0;
+            int rowschange = viewchange.Rows.Count;
+            int rowsconfirm = viewconfirm.Rows.Count;
 
-            if(viewchange == null)
+            if (rowschange != 0 && rowsconfirm == 0)
             {
-                MessageBox.Show("没有可以删除的记录!");
+                if ((MessageBox.Show("没有可以删除的换课确认记录,是否删除换课记录?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
+                {
+                    numchange = numchange + DeleteCC(2);
+                }
+                else//如果点击“取消”按钮
+                {
+                    return;
+                }
+            }
+            else if (rowschange == 0 && rowsconfirm != 0)
+            {
+                if ((MessageBox.Show("没有可以删除的换课记录,是否删除换课确认记录?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
+                {
+                    numconfirm = numconfirm + DeleteCC(1);
+                }
+                else//如果点击“取消”按钮
+                {
+                    return;
+                }
+            }
+            else if (rowschange != 0 && rowsconfirm != 0)
+            {
+                numconfirm = numconfirm + DeleteCC(1);
+
+                if (numconfirm == 2)
+                {
+                    numchange = numchange + DeleteCC(2);
+                }
+                else
+                {
+                    MessageBox.Show("GG!");
+                    return;
+                }
             }
             else
             {
-                num = DoDeleteBussiness(1);
+                MessageBox.Show("没有可以删除的内容!");
+                return;
             }
 
-            if (num == 1)
+            if (numchange == 3 && numconfirm == 2)
             {
-                MessageBox.Show("重置成功!");
+                MessageBox.Show("全部删除成功!");
+                DeleteConfirmCourse();
+                DeleteChangeCourse();
+                return;
+            }
+            else if (numchange == 3)
+            {
+                MessageBox.Show("删除换课失效记录成功!");
+                DeleteChangeCourse();
+                return;
+            }
+            else if (numconfirm == 2)
+            {
+                MessageBox.Show("删除换课确认失效记录成功!");
+                DeleteConfirmCourse();
                 return;
             }
             else
             {
-                MessageBox.Show("重置失败!");
+                MessageBox.Show("删除失败!请检查数据库!");
                 return;
             }
         }
 
-
-
-
-        #endregion
-
-        #region 一键删除换课确认记录
-
-        /// <summary>
-        /// 一键删除换课确认记录
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DeleteConfirm_Click(object sender, RoutedEventArgs e)
+        private int DeleteCC(int v)
         {
-            int num = 0;
+            int num = v;
 
-            if (viewconfirm == null)
+            if (v == 1)
             {
-                MessageBox.Show("没有可以删除的记录!");
+                for (int i = 0; i < viewconfirm.Rows.Count; i++)
+                {
+                    //删除换课确认失效记录
+                    int StudentNo = (int)viewconfirm.Rows[i]["StudentNo_B"];
+                    int SportCourseNo = (int)viewconfirm.Rows[i]["SportCourseNo_B"];
+                    num = num + DoDeleteBussiness(StudentNo, SportCourseNo, 2);
+                }
             }
-            else
+            else if (v == 2)
             {
-                num = DoDeleteBussiness(2);
+                for (int i = 0; i < viewchange.Rows.Count; i++)
+                {
+                    //删除换课失效记录
+                    int StudentNo = (int)viewchange.Rows[i]["StudentNo_A"];
+                    int SportCourseNo = (int)viewchange.Rows[i]["SportCourseNo_A"];
+                    num = num + DoDeleteBussiness(StudentNo, SportCourseNo, 1);
+                }
             }
 
-            if (num == 1)
-            {
-                MessageBox.Show("重置成功!");
-                return;
-            }
-            else
-            {
-                MessageBox.Show("重置失败!");
-                return;
-            }
+            return num;
         }
-
-        #endregion
 
         /// <summary>
         /// 事务判断
         /// </summary>
         /// <param name="v"></param>
         /// <returns></returns>
-        private int DoDeleteBussiness(int v)
+        private int DoDeleteBussiness(int StudentNo,int SportCourseNo ,int v)
         {
             int i = 0;
 
@@ -1014,6 +993,7 @@ namespace sports_course
             {
                 try
                 {
+                    BLL.DoBussiness.D1(t, StudentNo, SportCourseNo, 3);
                     BLL.DoBussiness.D9(t, v);
                     i++;
                     t.Commit();
