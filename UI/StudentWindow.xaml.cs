@@ -293,6 +293,14 @@ namespace sports_course
         }
 
         /// <summary>
+        /// 检测时间
+        /// </summary>
+        private void CheckTime()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// 关闭当前tab页面
         /// </summary>
         /// <param name="sender"></param>
@@ -411,10 +419,9 @@ namespace sports_course
             viewchange = db.ExecuteDataTable(selectSCC);
             changeconfirm.ItemsSource = viewchange.DefaultView;
             #endregion
-            int RowsCount = viewchange.Rows.Count;
 
             //删掉体育选课与课表重复时间的行
-            for (int a = 0; a < RowsCount; a++)
+            for (int a = 0; a < viewchange.Rows.Count; a++)
             {
                 for (int b = 0; b < majorcourse.Count; b++)
                 {
@@ -431,14 +438,30 @@ namespace sports_course
             viewchange.AcceptChanges();
 
             //删掉超时的失效记录
-            for (int i = 0; i <RowsCount; i++)
+            for (int i = 0; i < viewchange.Rows.Count; i++)
             {
-                int num = BLL.TimeCount.time((DateTime)viewchange.Rows[i]["ChangeCreateTime"]);
+                int minute = BLL.TimeCount.time((DateTime)viewchange.Rows[i]["ChangeCreateTime"]);
+                int SportCourseNo = (int)viewchange.Rows[i]["SportCourseNo_A"];
+                string ChangeChoice = viewchange.Rows[i]["ChangeChoice"].ToString().Trim();
 
-                if (num  > 10)
+                if (studentsportcourseno == SportCourseNo && ChangeChoice != "2" && minute > 20)
+                {
+                    if ((MessageBox.Show("您的换课请求已经过期,是否撤回?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
+                    {
+                        MessageBox.Show("可");
+                    }
+                    else//如果点击“取消”按钮
+                    {
+                        return;
+                    }
+                }
+
+                if (minute > 10)
                 {
                     viewchange.Rows[i].Delete();
                 }
+                
+
             }
             viewchange.AcceptChanges();
 
@@ -451,6 +474,8 @@ namespace sports_course
             }
 
             #endregion
+
+
         }
 
         /// <summary>
@@ -468,10 +493,9 @@ namespace sports_course
             viewconfirm = db.ExecuteDataTable(selectSCC);
             receiveconfirm.ItemsSource = viewconfirm.DefaultView;
             #endregion
-            int RowsCount = viewconfirm.Rows.Count;
 
             //删掉超时的失效记录
-            for (int i = 0; i < RowsCount; i++)
+            for (int i = 0; i < viewconfirm.Rows.Count; i++)
             {
                 int num = BLL.TimeCount.time((DateTime)viewconfirm.Rows[i]["ConfirmCreateTime"]);
 
@@ -536,17 +560,16 @@ namespace sports_course
                 DAL.DbHelper db = new DAL.DbHelper();
                 DbCommand selectsport = db.GetSqlStringCommond("select * from SportCourse");
                 dt = db.ExecuteDataTable(selectsport);
-                int RowsCount = dt.Rows.Count;
 
                 //向table里增加多一列控制属性 
                 dt.Columns.Add("Check");
-                for (int j = 0; j < RowsCount; j++)//为该列增加相应的数值  
+                for (int j = 0; j < dt.Rows.Count; j++)//为该列增加相应的数值  
                 {
                     dt.Rows[j]["Check"] = 0;
                 }
 
                 //删掉体育选课与课表重复时间的行
-                for (int a = 0; a < RowsCount; a++)
+                for (int a = 0; a < dt.Rows.Count; a++)
                 {
                     for (int b = 0; b < majorcourse.Count; b++)
                     {
@@ -588,10 +611,9 @@ namespace sports_course
                 DAL.DbHelper db = new DAL.DbHelper();
                 DbCommand selectsport = db.GetSqlStringCommond("select * from SportCourse");
                 dt = db.ExecuteDataTable(selectsport);
-                int RowsCount = dt.Rows.Count;
 
                 //删掉体育选课与课表重复时间的行
-                for (int a = 0; a < RowsCount; a++)
+                for (int a = 0; a < dt.Rows.Count; a++)
                 {
                     for (int b = 0; b < majorcourse.Count; b++)
                     {
@@ -1207,7 +1229,6 @@ namespace sports_course
         private void StartChoice()
         {
             SScourse.Clear();
-            int RowsCount = dt.Rows.Count;
             int a = 0;
 
             //将选中的体育课信息存入List

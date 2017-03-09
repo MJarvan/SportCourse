@@ -895,17 +895,6 @@ namespace sports_course
                     return;
                 }
             }
-            else if (rowschange == 0 && rowsconfirm != 0)
-            {
-                if ((MessageBox.Show("没有可以删除的换课记录,是否删除换课确认记录?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
-                {
-                    numconfirm = numconfirm + DeleteCC(1);
-                }
-                else//如果点击“取消”按钮
-                {
-                    return;
-                }
-            }
             else if (rowschange != 0 && rowsconfirm != 0)
             {
                 numconfirm = numconfirm + DeleteCC(1);
