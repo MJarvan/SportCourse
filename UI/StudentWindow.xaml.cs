@@ -279,9 +279,9 @@ namespace sports_course
                     change.IsSelected = true;
                     AddStudentInfo();
                     AddSSC();
+                    AddConfirm();
                     int studentmajor = GetStudentMajorNo();
                     AddChange(studentmajor);
-                    AddConfirm();
                 }
                 else
                 {
@@ -441,26 +441,58 @@ namespace sports_course
             for (int i = 0; i < viewchange.Rows.Count; i++)
             {
                 int minute = BLL.TimeCount.time((DateTime)viewchange.Rows[i]["ChangeCreateTime"]);
-                int SportCourseNo = (int)viewchange.Rows[i]["SportCourseNo_A"];
+                int StudentNo_A = (int)viewchange.Rows[i]["StudentNo_A"];
+                int ChangeNo = (int)viewchange.Rows[i]["ChangeNo"];
                 string ChangeChoice = viewchange.Rows[i]["ChangeChoice"].ToString().Trim();
 
-                if (studentsportcourseno == SportCourseNo && ChangeChoice != "2" && minute > 20)
+                //无人应答,只撤回A同学
+                if (studentno == StudentNo_A && ChangeChoice == "0" && minute > 5)
                 {
-                    if ((MessageBox.Show("您的换课请求已经过期,是否撤回?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
+                    int num = 0;
+
+                    num = DoRecallBussiness(ChangeNo, 1);
+
+                    if (num == 1)
                     {
-                        MessageBox.Show("可");
+                        MessageBox.Show("由于没有人回应您的请求,系统已经帮您撤回!");
+                        AddChosen();
+                        AddInterface();
+                        viewcourse.IsSelected = true;
+                        change.Visibility = Visibility.Collapsed;
                     }
-                    else//如果点击“取消”按钮
+                    else
                     {
-                        return;
+                        MessageBox.Show("撤回失败!请联系管理员!");
                     }
                 }
+                //B同学应答了,撤回A和B
+                else if (studentno == StudentNo_A && ChangeChoice == "1" && minute > 1)
+                {
+                    int num = 0;
 
-                if (minute > 10)
+                    int StudentNo_B = (int)viewconfirm.Rows[i]["StudentNo_B"];
+                    int SportCourseNo_B = (int)viewconfirm.Rows[i]["SportCourseNo_B"];
+                    int ConfirmNo = (int)viewconfirm.Rows[0]["ConfirmNo"];
+
+                    num = RecallAandB(ChangeNo, ConfirmNo, StudentNo_B, SportCourseNo_B, 3);
+
+                    if (num == 1)
+                    {
+                        MessageBox.Show("由于您的请求超时操作,系统已经帮您和请求方撤回!");
+                        AddChosen();
+                        AddInterface();
+                        viewcourse.IsSelected = true;
+                        change.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        MessageBox.Show("撤回失败!请联系管理员!");
+                    }
+                }
+                else if (minute > 10)
                 {
                     viewchange.Rows[i].Delete();
                 }
-                
 
             }
             viewchange.AcceptChanges();
@@ -475,8 +507,9 @@ namespace sports_course
 
             #endregion
 
-
         }
+
+
 
         /// <summary>
         /// 加载换课确认信息
@@ -495,15 +528,38 @@ namespace sports_course
             #endregion
 
             //删掉超时的失效记录
-            for (int i = 0; i < viewconfirm.Rows.Count; i++)
+            if(viewconfirm.Rows.Count != 0)
             {
-                int num = BLL.TimeCount.time((DateTime)viewconfirm.Rows[i]["ConfirmCreateTime"]);
+                int time = BLL.TimeCount.time((DateTime)viewconfirm.Rows[0]["ConfirmCreateTime"]);
+                int StudentNo = (int)viewconfirm.Rows[0]["StudentNo_B"];
+                int ConfirmNo = (int)viewconfirm.Rows[0]["ConfirmNo"];
+                string ConfirmChoice = viewconfirm.Rows[0]["ConfirmChoice"].ToString().Trim();
 
-                if (num > 10)
+                if (studentno == StudentNo && ConfirmChoice != "1" && time > 5)
                 {
-                    viewconfirm.Rows[i].Delete();
+                    int num = 0;
+
+                    num = DoRecallBussiness(ConfirmNo, 2);
+
+                    if (num == 1)
+                    {
+                        MessageBox.Show("由于没有人回应您的请求,系统已经帮您撤回!");
+                        AddChosen();
+                        AddInterface();
+                        viewcourse.IsSelected = true;
+                        change.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        MessageBox.Show("撤回失败!请联系管理员!");
+                    }
+                }
+                else if (time > 10)
+                {
+                    viewconfirm.Rows[0].Delete();
                 }
             }
+
             viewconfirm.AcceptChanges();
 
             #region 改正字符类型
@@ -906,6 +962,72 @@ namespace sports_course
         #endregion
 
         #region 数据库逻辑操作
+
+        /// <summary>
+        /// 同时撤回同学A和同学B的换课请求
+        /// </summary>
+        /// <param name="changeNo"></param>
+        /// <param name="confirmNo"></param>
+        /// <param name="studentNo_B"></param>
+        /// <param name="sportCourseNo_B"></param>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        private int RecallAandB(int changeNo, int confirmNo, int studentNo_B, int sportCourseNo_B, int v)
+        {
+            int i = 0;
+            using (DAL.Trans t = new DAL.Trans())
+            {
+                try
+                {
+                    BLL.DoBussiness.D3(t, changeNo, 3);
+                    BLL.DoBussiness.D4(t, confirmNo, 2);
+                    BLL.DoBussiness.D1(t, studentno, studentsportcourseno, 3);
+                    BLL.DoBussiness.D1(t, studentNo_B, sportCourseNo_B, 3);
+                    i++;
+                    t.Commit();
+                }
+                catch
+                {
+                    t.RollBack();
+                }
+            }
+            return i;
+        }
+
+        /// <summary>
+        /// 失效记录事务判断
+        /// </summary>
+        private int DoRecallBussiness(int No ,int v)
+        {
+            int i = 0;
+            using (DAL.Trans t = new DAL.Trans())
+            {
+                try
+                {
+                    if(v == 1)
+                    {
+                        BLL.DoBussiness.D3(t, No, 3);
+                        BLL.DoBussiness.D1(t, studentno, studentsportcourseno, 3);
+                    }
+                    else if (v == 2)
+                    {
+                        BLL.DoBussiness.D4(t, No, 2);
+                        BLL.DoBussiness.D1(t, studentno, studentsportcourseno, 3);
+                    }
+                    else if (v == 3)
+                    {
+
+                    }
+                    i++;
+                    t.Commit();
+                }
+                catch
+                {
+                    t.RollBack();
+                }
+            }
+            return i;
+        }
 
         /// <summary>
         /// 更新学生选课控制
@@ -1813,10 +1935,12 @@ namespace sports_course
 
             studentchangeno = (int)dr.Row["ChangeNo"];
             studentconfirmno = (int)dr.Row["ConfirmNo"];
+            int StudentNo_B = (int)dr.Row["StudentNo_B"];
+            int SportCourseNo_B = (int)dr.Row["SportCourseNo_B"];
 
             if ((MessageBox.Show("是否确认拒绝?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
             {
-                num = DoRefuseBussiness();
+                num = DoRefuseBussiness(StudentNo_B,SportCourseNo_B);
             }
             else//如果点击“取消”按钮
             {
@@ -1844,7 +1968,7 @@ namespace sports_course
         /// 事务判断
         /// </summary>
         /// <returns></returns>
-        private int DoRefuseBussiness()
+        private int DoRefuseBussiness(int StudentNo_B, int SportCourseNo_B)
         {
             int i = 0;
             using (DAL.Trans t = new DAL.Trans())
@@ -1853,6 +1977,8 @@ namespace sports_course
                 {
                     BLL.DoBussiness.D3(t, studentchangeno, 3);
                     BLL.DoBussiness.D4(t, studentconfirmno, 2);
+                    BLL.DoBussiness.D1(t, studentno, studentsportcourseno, 3);
+                    BLL.DoBussiness.D1(t, StudentNo_B, SportCourseNo_B, 3);
                     i++;
                     t.Commit();
                 }

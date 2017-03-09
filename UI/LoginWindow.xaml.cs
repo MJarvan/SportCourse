@@ -29,7 +29,7 @@ namespace sports_course
         public LoginWindow()
         {
             InitializeComponent();
-            managerBTN.IsChecked = true;
+            studentBTN.IsChecked = true;
         }
 
         /// <summary>
