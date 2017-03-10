@@ -30,6 +30,8 @@ namespace sports_course
         List<DB.ViewMajorMainCourse> majorcourse = new List<DB.ViewMajorMainCourse>();
         List<DB.ViewStudentSportCourse> viewSSC = new List<DB.ViewStudentSportCourse>();
         List<DB.TblStudentSportCourse> SScourse = new List<DB.TblStudentSportCourse>();
+        List<DB.TblChangeCourse> changec = new List<DB.TblChangeCourse>();
+        List<DB.TblConfirmCourse> confirmc = new List<DB.TblConfirmCourse>();
 
         DataTable dt = new DataTable();//sportcourse的datatable
         DataTable viewchange = new DataTable();//ViewStudentChangeCourse的datatable
@@ -118,6 +120,8 @@ namespace sports_course
 
         #region 界面操作
 
+        #region 添加边框
+
         /// <summary>
         /// 添加边框
         /// </summary>
@@ -129,7 +133,7 @@ namespace sports_course
             {
                 if (i != rows - 1)
                 {
-                    #region
+                    #region 边框颜色大小设计
 
                     for (int j = 0; j < columns; j++)
                     {
@@ -185,6 +189,10 @@ namespace sports_course
             }
         }
 
+        #endregion
+
+        #region 学生主界面显示
+
         /// <summary>
         /// 获取学生界面显示
         /// </summary>
@@ -230,6 +238,10 @@ namespace sports_course
                 }
             }
         }
+
+        #endregion
+
+        #region tab页面操作
 
         /// <summary>
         /// 打开tab页面
@@ -279,9 +291,7 @@ namespace sports_course
                     change.IsSelected = true;
                     AddStudentInfo();
                     AddSSC();
-                    AddConfirm();
-                    int studentmajor = GetStudentMajorNo();
-                    AddChange(studentmajor);
+                    AddCandC();
                 }
                 else
                 {
@@ -290,14 +300,6 @@ namespace sports_course
                 }
             }
 
-        }
-
-        /// <summary>
-        /// 检测时间
-        /// </summary>
-        private void CheckTime()
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -325,6 +327,10 @@ namespace sports_course
                 viewcourse.IsSelected = true;
             }
         }
+
+        #endregion
+
+        #region 注销或者关闭操作
 
         /// <summary>
         /// 注销返回登录界面
@@ -366,10 +372,13 @@ namespace sports_course
                 return;
             }
         }
+        #endregion
 
         #endregion
 
         #region 学生课表信息操作
+
+        #region 加载学生基本信息
 
         /// <summary>
         /// 加载学生基本信息
@@ -403,6 +412,147 @@ namespace sports_course
             #endregion
         }
 
+        /// <summary>
+        /// 获取学生专业编号
+        /// </summary>
+        private int GetStudentMajorNo()
+        {
+            int studentmajor = 0;
+
+            for (int i = 0; i < student.Count; i++)
+            {
+                if (studentno == student[i].Studentno)
+                {
+                    studentmajor = student[i].Majorno;
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return studentmajor;
+        }
+
+        /// <summary>
+        /// 添加学生课表信息
+        /// </summary>
+        private void AddStudentCourse(int studentmajor)
+        {
+            #region 获取周几第几节的赋值
+
+            string[] waw = new string[majorcourse.Count];
+            string[] coursename = new string[majorcourse.Count];
+
+            for (int i = 0; i < majorcourse.Count; i++)
+            {
+                if (studentmajor == majorcourse[i].Majorno)
+                {
+                    waw[i] = majorcourse[i].Weekandwhen.Trim();
+                    coursename[i] = majorcourse[i].Maincoursename.Trim();
+                }
+            }
+
+            for (int j = 0; j < waw.Length; j++)
+            {
+                if (waw[j] == "11")
+                {
+                    D1C1.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "12")
+                {
+                    D1C2.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "13")
+                {
+                    D1C3.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "14")
+                {
+                    D1C4.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "21")
+                {
+                    D2C1.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "22")
+                {
+                    D2C2.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "23")
+                {
+                    D2C3.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "24")
+                {
+                    D2C4.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "31")
+                {
+                    D3C1.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "32")
+                {
+                    D3C2.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "33")
+                {
+                    D3C3.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "34")
+                {
+                    D3C4.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "41")
+                {
+                    D4C1.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "42")
+                {
+                    D4C2.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "43")
+                {
+                    D4C3.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "44")
+                {
+                    D4C4.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "51")
+                {
+                    D5C1.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "52")
+                {
+                    D5C2.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "53")
+                {
+                    D5C3.Text = coursename[j].Trim();
+                }
+                else if (waw[j] == "54")
+                {
+                    D5C4.Text = coursename[j].Trim();
+                }
+            }
+            #endregion
+        }
+
+        #endregion
+
+        #region 学生换课操作
+
+        /// <summary>
+        /// 换课综合函数
+        /// </summary>
+        private void AddCandC()
+        {
+            AddConfirm();
+            int studentmajor = GetStudentMajorNo();
+            AddChange(studentmajor);
+            RecallCandC();
+        }
 
         /// <summary>
         /// 加载换课信息
@@ -441,55 +591,8 @@ namespace sports_course
             for (int i = 0; i < viewchange.Rows.Count; i++)
             {
                 int minute = BLL.TimeCount.time((DateTime)viewchange.Rows[i]["ChangeCreateTime"]);
-                int StudentNo_A = (int)viewchange.Rows[i]["StudentNo_A"];
-                int ChangeNo = (int)viewchange.Rows[i]["ChangeNo"];
-                string ChangeChoice = viewchange.Rows[i]["ChangeChoice"].ToString().Trim();
-
-                //无人应答,只撤回A同学
-                if (studentno == StudentNo_A && ChangeChoice == "0" && minute > 5)
-                {
-                    int num = 0;
-
-                    num = DoRecallBussiness(ChangeNo, 1);
-
-                    if (num == 1)
-                    {
-                        MessageBox.Show("由于没有人回应您的请求,系统已经帮您撤回!");
-                        AddChosen();
-                        AddInterface();
-                        viewcourse.IsSelected = true;
-                        change.Visibility = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        MessageBox.Show("撤回失败!请联系管理员!");
-                    }
-                }
-                //B同学应答了,撤回A和B
-                else if (studentno == StudentNo_A && ChangeChoice == "1" && minute > 1)
-                {
-                    int num = 0;
-
-                    int StudentNo_B = (int)viewconfirm.Rows[i]["StudentNo_B"];
-                    int SportCourseNo_B = (int)viewconfirm.Rows[i]["SportCourseNo_B"];
-                    int ConfirmNo = (int)viewconfirm.Rows[0]["ConfirmNo"];
-
-                    num = RecallAandB(ChangeNo, ConfirmNo, StudentNo_B, SportCourseNo_B, 3);
-
-                    if (num == 1)
-                    {
-                        MessageBox.Show("由于您的请求超时操作,系统已经帮您和请求方撤回!");
-                        AddChosen();
-                        AddInterface();
-                        viewcourse.IsSelected = true;
-                        change.Visibility = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        MessageBox.Show("撤回失败!请联系管理员!");
-                    }
-                }
-                else if (minute > 10)
+                
+                if (minute > 10)
                 {
                     viewchange.Rows[i].Delete();
                 }
@@ -510,7 +613,6 @@ namespace sports_course
         }
 
 
-
         /// <summary>
         /// 加载换课确认信息
         /// </summary>
@@ -527,15 +629,129 @@ namespace sports_course
             receiveconfirm.ItemsSource = viewconfirm.DefaultView;
             #endregion
 
-            //删掉超时的失效记录
+
+            #region 改正字符类型
+
+            DataRow[] waw = viewconfirm.Select("WeekAndWhen>9");
+            foreach (DataRow row in waw)
+            {
+                row["WeekAndWhen"] = BLL.JudgeWAW.Judge(row["WeekAndWhen"].ToString());
+            }
+
+            #endregion
+            
+        }
+
+        /// <summary>
+        /// 判断是否撤回学生A或者学生B的
+        /// </summary>
+        private void RecallCandC()
+        {
+            //应该弄一个判断函数再做断定!
+
+            changec.Clear();
+            confirmc.Clear();
+
+            DAL.DbHelper db = new DAL.DbHelper();
+
+            #region datareader加载换课信息
+
+            DbCommand selectCC1 = db.GetSqlStringCommond("select * from ChangeCourse where StudentNo_A=" + studentno);
+
+            using (DbDataReader reader = db.ExecuteReader(selectCC1))
+            {
+                while (reader.Read())
+                {
+                    DB.TblChangeCourse model = new DB.TblChangeCourse();
+
+                    model.Changeno = reader.GetInt32(0);
+                    model.Studentno_A = reader.GetInt32(1);
+                    model.Sportcourseno_A = reader.GetInt32(2);
+                    model.Changechoice = reader.GetString(4).Trim();
+                    model.Changecreatetime = reader.GetDateTime(5);
+                    changec.Add(model);
+                }
+            }
+            #endregion
+
+            #region datareader加载换课确认信息
+
+            DbCommand selectCC2 = db.GetSqlStringCommond("select * from ConfirmCourse where StudentNo_B=" + studentno);
+
+            using (DbDataReader reader = db.ExecuteReader(selectCC2))
+            {
+                while (reader.Read())
+                {
+                    DB.TblConfirmCourse model = new DB.TblConfirmCourse();
+
+                    model.Confirmno = reader.GetInt32(0);
+                    model.Changeno = reader.GetInt32(1);
+                    model.Studentno_B = reader.GetInt32(2);
+                    model.Sportcourseno_B = reader.GetInt32(3);
+                    model.Confirmchoice = reader.GetString(5).Trim();
+                    model.Confirmcreatetime = reader.GetDateTime(6);
+                    confirmc.Add(model);
+                }
+            }
+            #endregion
+
+            //同时撤回B的换课确认和A的换课请求
             if(viewconfirm.Rows.Count != 0)
             {
                 int time = BLL.TimeCount.time((DateTime)viewconfirm.Rows[0]["ConfirmCreateTime"]);
-                int StudentNo = (int)viewconfirm.Rows[0]["StudentNo_B"];
+                int StudentNo_B = (int)viewconfirm.Rows[0]["StudentNo_B"];
+                int SportCourseNo_B = (int)viewconfirm.Rows[0]["SportCourseNo_B"];
                 int ConfirmNo = (int)viewconfirm.Rows[0]["ConfirmNo"];
                 string ConfirmChoice = viewconfirm.Rows[0]["ConfirmChoice"].ToString().Trim();
 
-                if (studentno == StudentNo && ConfirmChoice != "1" && time > 5)
+                //无人应答,只撤回A同学的换课请求
+                for (int i = 0; i < changec.Count; i++)
+                {
+                    int ChangeNo = changec[i].Changeno;
+                    int StudentNo_A = changec[i].Studentno_A;
+                    string ChangeChoice = changec[i].Changechoice.Trim();
+                    int minute = BLL.TimeCount.time(changec[i].Changecreatetime);
+                    if (studentno == StudentNo_A && ChangeChoice == "1" && minute > 10)
+                    {
+                        int num = 0;
+
+                        num = RecallAandB(ChangeNo, ConfirmNo, StudentNo_B, SportCourseNo_B, 3);
+
+                        if (num == 1)
+                        {
+                            MessageBox.Show("由于您的请求超时操作,系统已经帮您和请求方撤回!");
+                            AddChosen();
+                            AddInterface();
+                            viewcourse.IsSelected = true;
+                            change.Visibility = Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            MessageBox.Show("撤回失败!请联系管理员!");
+                        }
+                        break;
+                    }
+                }
+
+                //删掉超时的失效记录
+                if (time > 5)
+                {
+                    viewconfirm.Rows[0].Delete();
+                }
+
+                viewconfirm.AcceptChanges();
+            }
+
+            //撤回B的换课确认请求
+            if (confirmc.Count != 0)
+            {
+                int ConfirmNo = confirmc[0].Confirmno;
+                int StudentNo_B = confirmc[0].Studentno_B;
+                int SportCourseNo_B = confirmc[0].Sportcourseno_B;
+                string ConfirmChoice = confirmc[0].Confirmchoice.Trim();
+                int minute = BLL.TimeCount.time(confirmc[0].Confirmcreatetime);
+
+                if (studentno == StudentNo_B && ConfirmChoice != "1" && minute > 1)
                 {
                     int num = 0;
 
@@ -554,25 +770,42 @@ namespace sports_course
                         MessageBox.Show("撤回失败!请联系管理员!");
                     }
                 }
-                else if (time > 10)
+            }
+            else
+            {
+                for (int i = 0; i < changec.Count; i++)
                 {
-                    viewconfirm.Rows[0].Delete();
+                    int ChangeNo = changec[i].Changeno;
+                    int StudentNo_A = changec[i].Studentno_A;
+                    string ChangeChoice = changec[i].Changechoice.Trim();
+                    int minute = BLL.TimeCount.time(changec[i].Changecreatetime);
+                    if (studentno == StudentNo_A && ChangeChoice == "0" && minute > 10)
+                    {
+                        int num = 0;
+
+                        num = DoRecallBussiness(ChangeNo, 1);
+
+                        if (num == 1)
+                        {
+                            MessageBox.Show("由于没有人回应您的请求,系统已经帮您撤回!");
+                            AddChosen();
+                            AddInterface();
+                            viewcourse.IsSelected = true;
+                            change.Visibility = Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            MessageBox.Show("撤回失败!请联系管理员!");
+                        }
+                        break;
+                    }
                 }
             }
-
-            viewconfirm.AcceptChanges();
-
-            #region 改正字符类型
-
-            DataRow[] waw = viewconfirm.Select("WeekAndWhen>9");
-            foreach (DataRow row in waw)
-            {
-                row["WeekAndWhen"] = BLL.JudgeWAW.Judge(row["WeekAndWhen"].ToString());
-            }
-
-            #endregion
-            
         }
+
+        #endregion
+
+        #region 学生体育选课操作
 
         /// <summary>
         /// 加载SSC信息
@@ -833,132 +1066,8 @@ namespace sports_course
             #endregion
         }
 
-        /// <summary>
-        /// 获取学生专业编号
-        /// </summary>
-        private int GetStudentMajorNo()
-        {
-            int studentmajor = 0;
+        #endregion
 
-            for (int i = 0; i < student.Count; i++)
-            {
-                if (studentno == student[i].Studentno)
-                {
-                    studentmajor = student[i].Majorno;
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            return studentmajor;
-        }
-
-        /// <summary>
-        /// 添加学生课表信息
-        /// </summary>
-        private void AddStudentCourse(int studentmajor)
-        {
-            #region 获取周几第几节的赋值
-
-            string[] waw = new string[majorcourse.Count];
-            string[] coursename = new string[majorcourse.Count];
-
-            for (int i = 0; i < majorcourse.Count; i++)
-            {
-                if (studentmajor == majorcourse[i].Majorno)
-                {
-                    waw[i] = majorcourse[i].Weekandwhen.Trim();
-                    coursename[i] = majorcourse[i].Maincoursename.Trim();
-                }
-            }
-
-            for(int j = 0; j < waw.Length; j++)
-            {
-                if(waw[j] == "11")
-                {
-                    D1C1.Text = coursename[j].Trim();
-                }
-                else if(waw[j] == "12")
-                {
-                    D1C2.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "13")
-                {
-                    D1C3.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "14")
-                {
-                    D1C4.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "21")
-                {
-                    D2C1.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "22")
-                {
-                    D2C2.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "23")
-                {
-                    D2C3.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "24")
-                {
-                    D2C4.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "31")
-                {
-                    D3C1.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "32")
-                {
-                    D3C2.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "33")
-                {
-                    D3C3.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "34")
-                {
-                    D3C4.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "41")
-                {
-                    D4C1.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "42")
-                {
-                    D4C2.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "43")
-                {
-                    D4C3.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "44")
-                {
-                    D4C4.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "51")
-                {
-                    D5C1.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "52")
-                {
-                    D5C2.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "53")
-                {
-                    D5C3.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "54")
-                {
-                    D5C4.Text = coursename[j].Trim();
-                }
-            }
-            #endregion
-        }
         #endregion
 
         #region 数据库逻辑操作
@@ -1013,10 +1122,6 @@ namespace sports_course
                     {
                         BLL.DoBussiness.D4(t, No, 2);
                         BLL.DoBussiness.D1(t, studentno, studentsportcourseno, 3);
-                    }
-                    else if (v == 3)
-                    {
-
                     }
                     i++;
                     t.Commit();

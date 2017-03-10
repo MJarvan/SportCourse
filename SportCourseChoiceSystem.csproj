@@ -81,6 +81,8 @@
     <Compile Include="BLL\SSCCompare.cs" />
     <Compile Include="BLL\StudentSportChoiceNo.cs" />
     <Compile Include="DAL\CommonEqualityComparer.cs" />
+    <Compile Include="DB\TblChangeCourse.cs" />
+    <Compile Include="DB\TblConfirmCourse.cs" />
     <Compile Include="DB\TblManager.cs" />
     <Compile Include="DB\TblSportCourse.cs" />
     <Compile Include="DB\TblStudent.cs" />
