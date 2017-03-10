@@ -122,7 +122,8 @@ namespace sports_course
             DAL.DbHelper db = new DAL.DbHelper();
             #region datareader加载换课视图信息
 
-            DbCommand selectSCC2 = db.GetSqlStringCommond("select * from Delete_ConfirmCourse");
+            DbCommand selectSCC2 = db.GetSqlStringCommond("select * from ConfirmCourse where ConfirmChoice =@ConfirmChoice");
+            db.AddInParameter(selectSCC2, "@ConfirmChoice", DbType.String, "2");
             viewconfirm = db.ExecuteDataTable(selectSCC2);
             deleteconfirm.ItemsSource = viewconfirm.DefaultView;
             #endregion
@@ -138,7 +139,8 @@ namespace sports_course
             DAL.DbHelper db = new DAL.DbHelper();
             #region datareader加载换课视图信息
 
-            DbCommand selectSCC1 = db.GetSqlStringCommond("select * from Delete_ChangeCourse");
+            DbCommand selectSCC1 = db.GetSqlStringCommond("select * from ChangeCourse where ChangeChoice =@ChangeChoice");
+            db.AddInParameter(selectSCC1, "@ChangeChoice", DbType.String, "3");
             viewchange = db.ExecuteDataTable(selectSCC1);
             deletechange.ItemsSource = viewchange.DefaultView;
             #endregion
@@ -884,7 +886,7 @@ namespace sports_course
             int rowschange = viewchange.Rows.Count;
             int rowsconfirm = viewconfirm.Rows.Count;
 
-            if (rowschange != 0 && rowsconfirm == 0)
+            if (viewchange.Rows.Count != 0 && rowsconfirm == 0)
             {
                 if ((MessageBox.Show("没有可以删除的换课确认记录,是否删除换课记录?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
                 {
@@ -895,19 +897,11 @@ namespace sports_course
                     return;
                 }
             }
-            else if (rowschange != 0 && rowsconfirm != 0)
+            else if (viewchange.Rows.Count != 0 && rowsconfirm != 0)
             {
                 numconfirm = numconfirm + DeleteCC(1);
 
-                if (numconfirm == 2)
-                {
-                    numchange = numchange + DeleteCC(2);
-                }
-                else
-                {
-                    MessageBox.Show("GG!");
-                    return;
-                }
+                numchange = numchange + DeleteCC(2);
             }
             else
             {

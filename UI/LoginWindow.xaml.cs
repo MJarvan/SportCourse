@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 using System.Data.Common;
+using System.Text.RegularExpressions;
 
 namespace sports_course
 {
@@ -43,30 +44,41 @@ namespace sports_course
 
             if (studentBTN.IsChecked == true)
             {
-                int checkstudentno = Convert.ToInt32(No.Text);
-                string checkstudentpassword = Checkstudentno(checkstudentno);
-                if (checkstudentpassword != "")
+                Regex r = new Regex(@"^[0 - 9] *$");
+                if (r.IsMatch(No.Text.ToString().Trim()) == true)
                 {
-                    if (Password.Password == checkstudentpassword)
+                    int checkstudentno = Convert.ToInt32(No.Text);
+                    string checkstudentpassword = Checkstudentno(checkstudentno);
+                    if (checkstudentpassword != "")
                     {
-                        StudentWindow student = new StudentWindow();
-                        student.studentno = checkstudentno;
-                        student.Show();
-                        this.Close();
+                        if (Password.Password == checkstudentpassword)
+                        {
+                            StudentWindow student = new StudentWindow();
+                            student.studentno = checkstudentno;
+                            student.Show();
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("您的密码错误!");
+                            Password.Focus();
+                            return;
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("您的密码错误!");
-                        Password.Focus();
+                        MessageBox.Show("该账号不存在!");
+                        No.Focus();
                         return;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("该账号不存在!");
-                    No.Focus();
+                    MessageBox.Show("请输入八位数字的学号!");
+                    No.Clear();
                     return;
                 }
+
             }
             #endregion
 
@@ -245,5 +257,9 @@ namespace sports_course
             }
         }
         #endregion
+
+        private void No_KeyDown(object sender, KeyEventArgs e)
+        {
+        }
     }
 }

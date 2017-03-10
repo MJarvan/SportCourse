@@ -711,7 +711,7 @@ namespace sports_course
                     int StudentNo_A = changec[i].Studentno_A;
                     string ChangeChoice = changec[i].Changechoice.Trim();
                     int minute = BLL.TimeCount.time(changec[i].Changecreatetime);
-                    if (studentno == StudentNo_A && ChangeChoice == "1" && minute > 10)
+                    if (studentno == StudentNo_A && ChangeChoice == "1" && ConfirmChoice == "0" && minute > 10)
                     {
                         int num = 0;
 
@@ -734,7 +734,7 @@ namespace sports_course
                 }
 
                 //删掉超时的失效记录
-                if (time > 5)
+                if (ConfirmChoice == "0" && time > 5)
                 {
                     viewconfirm.Rows[0].Delete();
                 }
@@ -745,19 +745,20 @@ namespace sports_course
             //撤回B的换课确认请求
             if (confirmc.Count != 0)
             {
+                int ChangeNo = confirmc[0].Changeno;
                 int ConfirmNo = confirmc[0].Confirmno;
                 int StudentNo_B = confirmc[0].Studentno_B;
                 int SportCourseNo_B = confirmc[0].Sportcourseno_B;
                 string ConfirmChoice = confirmc[0].Confirmchoice.Trim();
                 int minute = BLL.TimeCount.time(confirmc[0].Confirmcreatetime);
 
-                if (studentno == StudentNo_B && ConfirmChoice != "1" && minute > 1)
+                if (studentno == StudentNo_B && ConfirmChoice == "0" && minute > 1)
                 {
                     int num = 0;
 
                     num = DoRecallBussiness(ConfirmNo, 2);
-
-                    if (num == 1)
+                    num = num + DoRecallBussiness(ChangeNo, 3);
+                    if (num == 2)
                     {
                         MessageBox.Show("由于没有人回应您的请求,系统已经帮您撤回!");
                         AddChosen();
@@ -799,7 +800,13 @@ namespace sports_course
                         }
                         break;
                     }
+                    //删掉超时的失效记录
+                    if (ChangeChoice == "0" && minute > 5)
+                    {
+                        viewchange.Rows[i].Delete();
+                    }
                 }
+                viewchange.AcceptChanges();
             }
         }
 
@@ -1122,6 +1129,10 @@ namespace sports_course
                     {
                         BLL.DoBussiness.D4(t, No, 2);
                         BLL.DoBussiness.D1(t, studentno, studentsportcourseno, 3);
+                    }
+                    else if (v == 3)
+                    {
+                        BLL.DoBussiness.D3(t, No, 0);
                     }
                     i++;
                     t.Commit();

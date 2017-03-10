@@ -167,7 +167,11 @@ namespace sports_course.BLL
             {
                 db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "3");
             }
-
+            //更新换课表之已撤回换课确认请求
+            else if (i == 0)
+            {
+                db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "0");
+            }
             if (t == null)
             {
                 db.ExecuteNonQuery(updateCC);
