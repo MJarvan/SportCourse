@@ -1003,12 +1003,47 @@ namespace sports_course
         /// <param name="e"></param>
         private void exportBTN_Click(object sender, RoutedEventArgs e)
         {
-            DateTime now = new DateTime();
-            now = DateTime.Now;
-            string a = now.ToShortDateString();
-            a = a.Replace('/', '-');
-            string filename = a + "选课情况";
-            BLL.ExportToExcel.CreateExcel(view, filename);
+            System.Windows.Forms.FolderBrowserDialog b = new System.Windows.Forms.FolderBrowserDialog();
+            b.ShowDialog();
+            if (b.SelectedPath != string.Empty)
+            {
+                //输出当前时间
+                DateTime now = new DateTime();
+                now = DateTime.Now;
+                string a = now.ToShortDateString();
+                a = a.Replace('/', '-');
+
+                //输出表头
+                string[] header = new string[sportcourseview.Columns.Count];
+
+                for (int i = 0; i < sportcourseview.Columns.Count; i++)
+                {
+                    header[i] = sportcourseview.Columns[i].Header.ToString().Trim();
+                }
+
+                //判断用户选择路径的大小
+                if (b.SelectedPath.Length <= 3)
+                {
+                    string file = b.SelectedPath + a + "选课情况.xlsx";
+                    BLL.ExportToExcel.CreateExcel(view, file, header);
+                }
+                else if (b.SelectedPath.Length > 3)
+                {
+                    string file = b.SelectedPath + "\\" + a + "选课情况.xlsx";
+                    BLL.ExportToExcel.CreateExcel(view, file, header);
+                }
+
+                for (int j = 0; j < header.Length; j++)
+                {
+                    test.Text = test.Text + header[j].ToString().Trim() + " ";
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("请选择要导出的路径!");
+                return;
+            }
         }
     }
 }

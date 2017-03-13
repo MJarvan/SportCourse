@@ -13,24 +13,37 @@ namespace sports_course.BLL
     /// </summary>
     public class ExportToExcel
     {
-        public static void CreateExcel (System.Data.DataTable dt , string filename)
+        /// <summary>
+        /// 创建Excel
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="File"></param>
+        /// <param name="header"></param>
+        public static void CreateExcel (System.Data.DataTable dt , string File , string[] header)
         {
             Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
             Workbook excelWB = excelApp.Workbooks.Add(System.Type.Missing);    //创建工作簿（WorkBook：即Excel文件主体本身）  
             Worksheet excelWS = (Worksheet)excelWB.Worksheets[1];   //创建工作表（即Excel里的子表sheet） 1表示在子表sheet1里进行数据导出  
 
-            excelWS.Cells.NumberFormat = "@";     //  如果数据中存在数字类型 可以让它变文本格式显示  
+            excelWS.Cells.NumberFormat = "@";     //  如果数据中存在数字类型 可以让它变文本格式显示
+
+            //导入表头
+            for (int a = 0; a < header.Length; a++)
+            {
+                excelWS.Cells[1,a + 1] = header[a].ToString().Trim();
+            }
+
             //将数据导入到工作表的单元格  
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 for (int j = 0; j < dt.Columns.Count; j++)
                 {
-                    excelWS.Cells[i + 1, j + 1] = dt.Rows[i][j].ToString();   //Excel单元格第一个从索引1开始  
+                    excelWS.Cells[i + 2, j + 1] = dt.Rows[i][j].ToString().Trim();   //Excel单元格第一个从索引1开始  
                 }
             }
             try
             {
-                excelWB.SaveAs("D:\\" + filename + ".xlsx");  //将其进行保存到指定的路径  
+                excelWB.SaveAs(File);  //将其进行保存到指定的路径  
             }
             catch
             {
@@ -49,6 +62,11 @@ namespace sports_course.BLL
             }
         }
 
+        /// <summary>
+        /// 释放Excel进程
+        /// </summary>
+        /// <param name="excelApp"></param>
+        /// <returns></returns>
         public static bool KillAllExcel(Microsoft.Office.Interop.Excel.Application excelApp)
         {
             try
