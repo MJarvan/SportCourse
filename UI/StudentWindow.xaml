@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:sports_course"
         Icon="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\course.ico"
         mc:Ignorable="d"
-        Title="StudentWindow" Height="600" Width="700" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="StudentWindow" MaxWidth="800"  Height="600" Width="800" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid>
         <StackPanel>
             <Menu x:Name="menu" Height="Auto" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">

@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:sports_course"
         Icon="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\course.ico"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="350" Width="525" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="LoginWindow" MinHeight="270" MaxHeight="270" Height="270" MinWidth="480" MaxWidth="480" Width="480" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid Name="grid">
         <Image Source="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\bw.jpg" Stretch="Fill"/>
         <StackPanel Name="main" HorizontalAlignment="Center" Height="Auto" Width="300" VerticalAlignment="Center">

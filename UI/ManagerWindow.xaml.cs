@@ -158,6 +158,7 @@ namespace sports_course
                 SSC_Loaded();
                 Random.Visibility = Visibility.Collapsed;
                 DropCourse.Visibility = Visibility.Visible;
+                exportBTN.Visibility = Visibility.Visible;
                 OpenChoice.Visibility = Visibility.Collapsed;
                 CloseChoice.Visibility = Visibility.Collapsed;
             }
@@ -165,6 +166,7 @@ namespace sports_course
             {
                 Random.Visibility = Visibility.Visible;
                 DropCourse.Visibility = Visibility.Collapsed;
+                exportBTN.Visibility = Visibility.Collapsed;
                 OpenChoice.Visibility = Visibility.Collapsed;
                 CloseChoice.Visibility = Visibility.Visible;
             }
@@ -172,6 +174,7 @@ namespace sports_course
             {
                 Random.Visibility = Visibility.Collapsed;
                 DropCourse.Visibility = Visibility.Collapsed;
+                exportBTN.Visibility = Visibility.Collapsed;
                 OpenChoice.Visibility = Visibility.Visible;
                 CloseChoice.Visibility = Visibility.Collapsed;
             }
@@ -883,10 +886,8 @@ namespace sports_course
         {
             int numchange = 0;
             int numconfirm = 0;
-            int rowschange = viewchange.Rows.Count;
-            int rowsconfirm = viewconfirm.Rows.Count;
 
-            if (viewchange.Rows.Count != 0 && rowsconfirm == 0)
+            if (viewchange.Rows.Count != 0 && viewconfirm.Rows.Count == 0)
             {
                 if ((MessageBox.Show("没有可以删除的换课确认记录,是否删除换课记录?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
                 {
@@ -897,11 +898,12 @@ namespace sports_course
                     return;
                 }
             }
-            else if (viewchange.Rows.Count != 0 && rowsconfirm != 0)
+            else if (viewchange.Rows.Count != 0 && viewconfirm.Rows.Count != 0)
             {
-                numconfirm = numconfirm + DeleteCC(1);
-
-                numchange = numchange + DeleteCC(2);
+                //删除换课确认请求
+                numconfirm = DeleteCC(1);
+                //删除换课请求
+                numchange = DeleteCC(2);
             }
             else
             {
@@ -909,20 +911,20 @@ namespace sports_course
                 return;
             }
 
-            if (numchange == 3 && numconfirm == 2)
+            if (numchange == viewchange.Rows.Count && numconfirm == viewconfirm.Rows.Count)
             {
                 MessageBox.Show("全部删除成功!");
                 DeleteConfirmCourse();
                 DeleteChangeCourse();
                 return;
             }
-            else if (numchange == 3)
+            else if (numchange == viewchange.Rows.Count)
             {
                 MessageBox.Show("删除换课失效记录成功!");
                 DeleteChangeCourse();
                 return;
             }
-            else if (numconfirm == 2)
+            else if (numconfirm == viewconfirm.Rows.Count)
             {
                 MessageBox.Show("删除换课确认失效记录成功!");
                 DeleteConfirmCourse();
@@ -937,7 +939,7 @@ namespace sports_course
 
         private int DeleteCC(int v)
         {
-            int num = v;
+            int num = 0;
 
             if (v == 1)
             {
@@ -990,8 +992,23 @@ namespace sports_course
             return i;
         }
 
+
         #endregion
 
 
+        /// <summary>
+        /// 导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void exportBTN_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime now = new DateTime();
+            now = DateTime.Now;
+            string a = now.ToShortDateString();
+            a = a.Replace('/', '-');
+            string filename = a + "选课情况";
+            BLL.ExportToExcel.CreateExcel(view, filename);
+        }
     }
 }

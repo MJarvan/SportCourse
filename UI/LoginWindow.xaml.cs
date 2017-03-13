@@ -44,7 +44,7 @@ namespace sports_course
 
             if (studentBTN.IsChecked == true)
             {
-                Regex r = new Regex(@"^[0 - 9] *$");
+                Regex r = new Regex("^[0-9]*$");
                 if (r.IsMatch(No.Text.ToString().Trim()) == true)
                 {
                     int checkstudentno = Convert.ToInt32(No.Text);
