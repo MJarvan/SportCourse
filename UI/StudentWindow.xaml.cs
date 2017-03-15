@@ -252,54 +252,59 @@ namespace sports_course
         {
             string item = ((MenuItem)sender).Name;
 
-            if (item == "choicecourse")
+            switch (item)
             {
-                if (control[0].Choicecontrol == 1)
-                {
-                    choice.Visibility = Visibility.Visible;
-                    choice.IsSelected = true;
-                    int studentmajor = GetStudentMajorNo();
-                    AddSportCourse(studentmajor,1);
-                }
-                else
-                {
-                    MessageBox.Show("当前选课还未开放!");
-                    return;
-                }
+                case "choicecourse":
+                    {
+                        if (control[0].Choicecontrol == 1)
+                        {
+                            choice.Visibility = Visibility.Visible;
+                            choice.IsSelected = true;
+                            int studentmajor = GetStudentMajorNo();
+                            AddSportCourse(studentmajor, 1);
+                        }
+                        else
+                        {
+                            MessageBox.Show("当前选课还未开放!");
+                            return;
+                        }
+                        break;
+                    }
+                case "grabcourse":
+                    {
+                        if (control[0].Grabcontrol == 1)
+                        {
+                            grab.Visibility = Visibility.Visible;
+                            grab.IsSelected = true;
+                            int studentmajor = GetStudentMajorNo();
+                            AddSportCourse(studentmajor, 2);
+                            AddChosen();
+                        }
+                        else
+                        {
+                            MessageBox.Show("当前抢课还未开放!");
+                            return;
+                        }
+                        break;
+                    }
+                case "changecourse":
+                    {
+                        if (control[0].Changecontrol == 1)
+                        {
+                            change.Visibility = Visibility.Visible;
+                            change.IsSelected = true;
+                            AddStudentInfo();
+                            AddSSC();
+                            AddCandC();
+                        }
+                        else
+                        {
+                            MessageBox.Show("当前换课还未开放!");
+                            return;
+                        }
+                        break;
+                    }
             }
-            else if (item == "grabcourse")
-            {
-                if (control[0].Grabcontrol == 1)
-                {
-                    grab.Visibility = Visibility.Visible;
-                    grab.IsSelected = true;
-                    int studentmajor = GetStudentMajorNo();
-                    AddSportCourse(studentmajor, 2);
-                    AddChosen();
-                }
-                else
-                {
-                    MessageBox.Show("当前抢课还未开放!");
-                    return;
-                }
-            }
-            else if (item == "changecourse")
-            {
-                if (control[0].Changecontrol == 1)
-                {
-                    change.Visibility = Visibility.Visible;
-                    change.IsSelected = true;
-                    AddStudentInfo();
-                    AddSSC();
-                    AddCandC();
-                }
-                else
-                {
-                    MessageBox.Show("当前换课还未开放!");
-                    return;
-                }
-            }
-
         }
 
         /// <summary>

@@ -20,7 +20,7 @@
                 </TextBlock.Background>广财大学生选课系统</TextBlock>
             <WrapPanel>
                 <TextBlock  Margin="20,5,20,5" FontSize="20" TextAlignment="Center">账号:</TextBlock>
-                <TextBox Margin="0,5,20,5" Name="No" FontSize="20" Width="180" MaxLength="8" InputMethod.PreferredImeState="Off" InputMethod.IsInputMethodEnabled="False" KeyDown="No_KeyDown"></TextBox>
+                <TextBox Margin="0,5,20,5" Name="No" FontSize="20" Width="180" MaxLength="8" InputMethod.PreferredImeState="Off" InputMethod.IsInputMethodEnabled="False"></TextBox>
             </WrapPanel>
             <WrapPanel>
                 <TextBlock  Margin="20,0,20,5" FontSize="20" TextAlignment="Center">密码:</TextBlock>

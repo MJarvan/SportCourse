@@ -153,52 +153,68 @@ namespace sports_course
         /// </summary>
         private void Set()
         {
-            if (control[0].Choicecontrol == 2)
+            switch (control[0].Choicecontrol)
             {
-                SSC_Loaded();
-                Random.Visibility = Visibility.Collapsed;
-                DropCourse.Visibility = Visibility.Visible;
-                exportBTN.Visibility = Visibility.Visible;
-                OpenChoice.Visibility = Visibility.Collapsed;
-                CloseChoice.Visibility = Visibility.Collapsed;
-            }
-            else if (control[0].Choicecontrol == 1)
-            {
-                Random.Visibility = Visibility.Visible;
-                DropCourse.Visibility = Visibility.Collapsed;
-                exportBTN.Visibility = Visibility.Collapsed;
-                OpenChoice.Visibility = Visibility.Collapsed;
-                CloseChoice.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Random.Visibility = Visibility.Collapsed;
-                DropCourse.Visibility = Visibility.Collapsed;
-                exportBTN.Visibility = Visibility.Collapsed;
-                OpenChoice.Visibility = Visibility.Visible;
-                CloseChoice.Visibility = Visibility.Collapsed;
-            }
-
-            if(control[0].Grabcontrol == 1)
-            {
-                OpenGrab.Visibility = Visibility.Collapsed;
-                CloseGrab.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                OpenGrab.Visibility = Visibility.Visible;
-                CloseGrab.Visibility = Visibility.Collapsed;
+                case 2:
+                    {
+                        SSC_Loaded();
+                        Random.Visibility = Visibility.Collapsed;
+                        DropCourse.Visibility = Visibility.Visible;
+                        exportBTN.Visibility = Visibility.Visible;
+                        OpenChoice.Visibility = Visibility.Collapsed;
+                        CloseChoice.Visibility = Visibility.Collapsed;
+                        break;
+                    }
+                case 1:
+                    {
+                        Random.Visibility = Visibility.Visible;
+                        DropCourse.Visibility = Visibility.Collapsed;
+                        exportBTN.Visibility = Visibility.Collapsed;
+                        OpenChoice.Visibility = Visibility.Collapsed;
+                        CloseChoice.Visibility = Visibility.Visible;
+                        break;
+                    }
+                default:
+                    {
+                        Random.Visibility = Visibility.Collapsed;
+                        DropCourse.Visibility = Visibility.Collapsed;
+                        exportBTN.Visibility = Visibility.Collapsed;
+                        OpenChoice.Visibility = Visibility.Visible;
+                        CloseChoice.Visibility = Visibility.Collapsed;
+                        break;
+                    }
             }
 
-            if(control[0].Changecontrol == 1)
+            switch (control[0].Grabcontrol)
             {
-                OpenChange.Visibility = Visibility.Collapsed;
-                CloseChange.Visibility = Visibility.Visible;
+                case 1:
+                    {
+                        OpenGrab.Visibility = Visibility.Collapsed;
+                        CloseGrab.Visibility = Visibility.Visible;
+                        break;
+                    }
+                default:
+                    {
+                        OpenGrab.Visibility = Visibility.Visible;
+                        CloseGrab.Visibility = Visibility.Collapsed;
+                        break;
+                    }
             }
-            else
+
+            switch (control[0].Changecontrol)
             {
-                OpenChange.Visibility = Visibility.Visible;
-                CloseChange.Visibility = Visibility.Collapsed;
+                case 1:
+                    {
+                        OpenChange.Visibility = Visibility.Collapsed;
+                        CloseChange.Visibility = Visibility.Visible;
+                        break;
+                    }
+                default:
+                    {
+                        OpenChange.Visibility = Visibility.Visible;
+                        CloseChange.Visibility = Visibility.Collapsed;
+                        break;
+                    }
             }
         }
 
@@ -219,35 +235,51 @@ namespace sports_course
         /// </summary>
         private void Judge()
         {
-            if (control[0].Choicecontrol == 2)
+            switch (control[0].Choicecontrol)
             {
-                txtchoice.Text = "选课已完成";
-            }
-            else if (control[0].Choicecontrol == 1)
-            {
-                txtchoice.Text = "选课已开放";
-            }
-            else if (control[0].Choicecontrol == 0)
-            {
-                txtchoice.Text = "选课已关闭";
-            }
-
-            if (control[0].Grabcontrol == 1)
-            {
-                txtgrab.Text = "抢课已开放";
-            }
-            else if (control[0].Grabcontrol == 0)
-            {
-                txtgrab.Text = "抢课已关闭";
+                case 2:
+                    {
+                        txtchoice.Text = "选课已完成";
+                        break;
+                    }
+                case 1:
+                    {
+                        txtchoice.Text = "选课已开放";
+                        break;
+                    }
+                default:
+                    {
+                        txtchoice.Text = "选课已关闭";
+                        break;
+                    }
             }
 
-            if (control[0].Changecontrol == 1)
+            switch (control[0].Grabcontrol)
             {
-                txtchange.Text = "换课已开放";
+                case 1:
+                    {
+                        txtgrab.Text = "抢课已开放";
+                        break;
+                    }
+                default:
+                    {
+                        txtgrab.Text = "抢课已关闭";
+                        break;
+                    }
             }
-            else if (control[0].Changecontrol == 0)
+
+            switch (control[0].Changecontrol)
             {
-                txtchange.Text = "换课已关闭";
+                case 1:
+                    {
+                        txtchange.Text = "换课已开放";
+                        break;
+                    }
+                default:
+                    {
+                        txtchange.Text = "换课已关闭";
+                        break;
+                    }
             }
         }
 
@@ -325,88 +357,95 @@ namespace sports_course
             DbCommand updateGrab = db.GetSqlStringCommond("update CourseControl set GrabControl=" + control[0].Grabcontrol);
             DbCommand updateChange = db.GetSqlStringCommond("update CourseControl set ChangeControl=" + control[0].Changecontrol);
 
-            if (item == "OpenChoice")
+            switch(item)
             {
-                control[0].Choicecontrol = 1;
-                //update [表名] set [字段名]=[值] Where [条件]
-                //"update CourseControl set ChoiceControl=' "+control[0].Choicecontrol+" '";
-                int i = db.ExecuteNonQuery(updateChoice);
-                if(i > 0)
-                {
-                    MessageBox.Show("开放选课成功!");
-                }
-                else
-                {
-                    MessageBox.Show("开放选课失败!");
-                }
-
+                case "OpenChoice":
+                    {
+                        control[0].Choicecontrol = 1;
+                        //update [表名] set [字段名]=[值] Where [条件]
+                        //"update CourseControl set ChoiceControl=' "+control[0].Choicecontrol+" '";
+                        int i = db.ExecuteNonQuery(updateChoice);
+                        if (i > 0)
+                        {
+                            MessageBox.Show("开放选课成功!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("开放选课失败!");
+                        }
+                        break;
+                    }
+                case "CloseChoice":
+                    {
+                        control[0].Choicecontrol = 0;
+                        int i = db.ExecuteNonQuery(updateChoice);
+                        if (i > 0)
+                        {
+                            MessageBox.Show("关闭选课成功!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("关闭选课失败!");
+                        }
+                        break;
+                    }
+                case "OpenGrab":
+                    {
+                        control[0].Grabcontrol = 1;
+                        int i = db.ExecuteNonQuery(updateGrab);
+                        if (i > 0)
+                        {
+                            MessageBox.Show("开放抢课成功!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("开放抢课失败!");
+                        }
+                        break;
+                    }
+                case "CloseGrab":
+                    {
+                        control[0].Grabcontrol = 0;
+                        int i = db.ExecuteNonQuery(updateGrab);
+                        if (i > 0)
+                        {
+                            MessageBox.Show("关闭抢课成功!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("关闭抢课失败!");
+                        }
+                        break;
+                    }
+                case "OpenChange":
+                    {
+                        control[0].Changecontrol = 1;
+                        int i = db.ExecuteNonQuery(updateChange);
+                        if (i > 0)
+                        {
+                            MessageBox.Show("开放换课成功!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("开放换课失败!");
+                        }
+                        break;
+                    }
+                case "CloseChange":
+                    {
+                        control[0].Changecontrol = 0;
+                        int i = db.ExecuteNonQuery(updateChange);
+                        if (i > 0)
+                        {
+                            MessageBox.Show("关闭换课成功!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("关闭换课失败!");
+                        }
+                        break;
+                    }
             }
-            else if (item == "CloseChoice")
-            {
-                control[0].Choicecontrol = 0;
-                int i = db.ExecuteNonQuery(updateChoice);
-                if (i > 0)
-                {
-                    MessageBox.Show("关闭选课成功!");
-                }
-                else
-                {
-                    MessageBox.Show("关闭选课失败!");
-                }
-            }
-            else if (item == "OpenGrab")
-            {
-                control[0].Grabcontrol = 1;
-                int i = db.ExecuteNonQuery(updateGrab);
-                if (i > 0)
-                {
-                    MessageBox.Show("开放抢课成功!");
-                }
-                else
-                {
-                    MessageBox.Show("开放抢课失败!");
-                }
-            }
-            else if (item == "CloseGrab")
-            {
-                control[0].Grabcontrol = 0;
-                int i = db.ExecuteNonQuery(updateGrab);
-                if (i > 0)
-                {
-                    MessageBox.Show("关闭抢课成功!");
-                }
-                else
-                {
-                    MessageBox.Show("关闭抢课失败!");
-                }
-            }
-            else if (item == "OpenChange")
-            {
-                control[0].Changecontrol = 1;
-                int i = db.ExecuteNonQuery(updateChange);
-                if (i > 0)
-                {
-                    MessageBox.Show("开放换课成功!");
-                }
-                else
-                {
-                    MessageBox.Show("开放换课失败!");
-                }
-            }
-            else if (item == "CloseChange")
-            {
-                control[0].Changecontrol = 0;
-                int i = db.ExecuteNonQuery(updateChange);
-                if (i > 0)
-                {
-                    MessageBox.Show("关闭换课成功!");
-                }
-                else
-                {
-                    MessageBox.Show("关闭换课失败!");
-                }
-            }
-
             Judge();
             Set();
         }
@@ -995,6 +1034,7 @@ namespace sports_course
 
         #endregion
 
+        #region 导出
 
         /// <summary>
         /// 导出
@@ -1032,12 +1072,6 @@ namespace sports_course
                     string file = b.SelectedPath + "\\" + a + "选课情况.xlsx";
                     BLL.ExportToExcel.CreateExcel(view, file, header);
                 }
-
-                for (int j = 0; j < header.Length; j++)
-                {
-                    test.Text = test.Text + header[j].ToString().Trim() + " ";
-                }
-
             }
             else
             {
@@ -1045,5 +1079,7 @@ namespace sports_course
                 return;
             }
         }
+
+        #endregion
     }
 }

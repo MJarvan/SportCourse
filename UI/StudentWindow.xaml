@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:sports_course"
         Icon="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\course.ico"
         mc:Ignorable="d"
-        Title="StudentWindow" MaxWidth="800"  Height="600" Width="800" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="StudentWindow" MaxHeight="525" MaxWidth="700"  Height="525" Width="700" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid>
         <StackPanel>
             <Menu x:Name="menu" Height="Auto" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
@@ -103,7 +103,7 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <DataGrid Name="choicesportcourse" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
+                            <DataGrid Name="choicesportcourse" MaxHeight="400" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible">
                                 <DataGrid.Columns>
                                     <DataGridTemplateColumn CanUserReorder="False">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -145,7 +145,7 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <DataGrid Name="grabsportcourse" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
+                            <DataGrid Name="grabsportcourse" MaxHeight="400" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="体育课程编号" IsReadOnly="True" Binding="{Binding Path=SportCourseNo}"/>
                                     <DataGridTextColumn Header="体育课程名称" IsReadOnly="True" Binding="{Binding Path=SportCourseName}" />
@@ -164,7 +164,7 @@
                 <TabItem Name="change" Header="换课" Visibility="Collapsed" >
                     <Grid Background="#FFE5E5E5">
                         <StackPanel>
-                            <Button Name="changeclose" Height="20" Width="20" Margin="10" HorizontalAlignment="Right" Click="close_Click">
+                            <Button Name="changeclose" Height="20" Width="20" Margin="0,10,10,0" HorizontalAlignment="Right" Click="close_Click">
                                 <Button.Style>
                                     <Style TargetType="Button" >
                                         <Setter Property="Template">
@@ -180,17 +180,17 @@
                                 </Button.Style>
                             </Button>
                             <DockPanel>
-                                <TextBlock  Margin="10" FontSize="20" TextAlignment="Center">体育选课:</TextBlock>
-                                <TextBlock Name="changecourseinfo"  Margin="10" FontSize="20" TextAlignment="Center" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock  Margin="10" FontSize="16" TextAlignment="Center">体育选课:</TextBlock>
+                                <TextBlock Name="changecourseinfo"  Margin="10" FontSize="16" TextAlignment="Center" TextWrapping="Wrap"></TextBlock>
                                 <Button Name="sendchangecourse" Width="150" Margin="10" DockPanel.Dock="Right" HorizontalAlignment="Right" Click="sendchangecourse_Click">发送换课请求</Button>
                             </DockPanel>
                             <Separator />
 
                             <DockPanel>
-                                <TextBlock  Margin="10" FontSize="20" TextAlignment="Left">收到的确认换课请求:</TextBlock>
+                                <TextBlock  Margin="10" FontSize="16" TextAlignment="Left">收到的确认换课请求:</TextBlock>
                                 <Button Name="refreshconfirmed" Width="150" Margin="10" DockPanel.Dock="Right" HorizontalAlignment="Right" Click="refreshconfirmed_Click">刷新换课确认请求</Button>
                             </DockPanel>
-                            <DataGrid Name="receiveconfirm" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
+                            <DataGrid Name="receiveconfirm" MaxHeight="60" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="换课确认编号" IsReadOnly="True" Binding="{Binding Path=ConfirmNo}"/>
                                     <DataGridTextColumn Header="换课编号" IsReadOnly="True" Binding="{Binding Path=ChangeNo}"/>
@@ -208,10 +208,10 @@
                             </WrapPanel>
                             <Separator />
                             <DockPanel>
-                                <TextBlock  Margin="10" FontSize="20" TextAlignment="Left">查看换课请求:</TextBlock>
+                                <TextBlock  Margin="10" FontSize="16" TextAlignment="Left">查看换课请求:</TextBlock>
                                 <Button Name="refreshsended" Width="150" Margin="10" DockPanel.Dock="Right" HorizontalAlignment="Right" Click="refreshsended_Click">刷新换课请求</Button>
                             </DockPanel>
-                            <DataGrid Name="changeconfirm" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
+                            <DataGrid Name="changeconfirm" MaxHeight="120" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="换课编号" IsReadOnly="True" Binding="{Binding Path=ChangeNo}"/>
                                     <DataGridTextColumn Header="学号" IsReadOnly="True" Binding="{Binding Path=StudentNo_A}"/>

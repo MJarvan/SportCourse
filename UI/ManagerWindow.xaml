@@ -51,7 +51,6 @@
                                     <Button Margin="5" Name="resetBTN" Click="resetBTN_Click">重置</Button>
                                     <Button Margin="5" Name="exportBTN" Click="exportBTN_Click">导出</Button>
                                 </WrapPanel>
-                                <TextBlock Name="test" Margin="5" VerticalAlignment="Center" TextAlignment="Center"></TextBlock>
                                 <DataGrid x:Name="sportcourseview" MaxHeight="160" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="学号" IsReadOnly="True" Binding="{Binding Path=StudentNo}"/>
@@ -81,7 +80,7 @@
                         <Grid Background="#FFE5E5E5">
                             <StackPanel>
                                 <TextBlock Margin="5" TextAlignment="Center" HorizontalAlignment="Left">失效的换课请求</TextBlock>
-                                <DataGrid Name="deletechange" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
+                                <DataGrid Name="deletechange" MaxHeight="150" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="换课编号" IsReadOnly="True" Binding="{Binding Path=ChangeNo}"/>
                                         <DataGridTextColumn Header="学号" IsReadOnly="True" Binding="{Binding Path=StudentNo_A}"/>
@@ -91,7 +90,7 @@
                                     </DataGrid.Columns>
                                 </DataGrid>
                                 <Separator />
-                                <DataGrid Name="deleteconfirm" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow">
+                                <DataGrid Name="deleteconfirm" MaxHeight="150" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="换课确认编号" IsReadOnly="True" Binding="{Binding Path=ConfirmNo}"/>
                                         <DataGridTextColumn Header="换课编号" IsReadOnly="True" Binding="{Binding Path=ChangeNo}"/>

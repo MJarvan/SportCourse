@@ -257,9 +257,5 @@ namespace sports_course
             }
         }
         #endregion
-
-        private void No_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
     }
 }
