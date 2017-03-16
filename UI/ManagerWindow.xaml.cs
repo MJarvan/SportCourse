@@ -628,50 +628,63 @@ namespace sports_course
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void quertBTN_Click(object sender, RoutedEventArgs e)
+        private void queryBTN_Click(object sender, RoutedEventArgs e)
         {
-            string txt = query.Text.Trim();
+            //旧版简单的过滤查询
+            //string txt = query.Text.Trim();
 
-            if (txt == "" || txt == null)
+            //if (txt == "" || txt == null)
+            //{
+            //    MessageBox.Show("请输入您要查询的内容!");
+            //    return;
+            //}
+            //else if (noBTN.IsChecked == true)
+            //{
+            //    if (txt.Length == 6)
+            //    {
+            //        IBindingListView blv = view.DefaultView;
+            //        blv.Filter = "SportCourseNo = '" + txt + "'";
+            //        sportcourseview.ItemsSource = blv;
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("请输入六位数的课程编号!");
+            //        Reset();
+            //        return;
+            //    }
+            //}
+            //else if (nameBTN.IsChecked == true)
+            //{
+            //    if (txt.Length == 2 || txt.Length == 3)
+            //    {
+            //        IBindingListView blv = view.DefaultView;
+            //        blv.Filter = "SportCourseName = '" + txt + "'";
+            //        sportcourseview.ItemsSource = blv;
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("请输入正确的课程名称!");
+            //        Reset();
+            //        return;
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("请选择要查询的类型!");
+            //    return;
+            //}
+
+            ////第一次改版但是studentno和sportcourseno只能完全匹配
+            DataTable querydt = new DataTable();
+            querydt = view.Clone();
+            string txt = query.Text.Trim();
+            string filter = "StudentName like '%" + txt + "%' or SportCourseName like '%" + txt + "%' or StudentNo=" + txt + "or SportCourseNo=" + txt;
+            DataRow[] rows = view.Select(filter);
+            foreach (DataRow row in rows)  // 将查询的结果添加到dt中； 
             {
-                MessageBox.Show("请输入您要查询的内容!");
-                return;
+                querydt.Rows.Add(row.ItemArray);
             }
-            else if (noBTN.IsChecked == true)
-            {
-                if (txt.Length == 6)
-                {
-                    IBindingListView blv = view.DefaultView;
-                    blv.Filter = "SportCourseNo = '" + txt + "'";
-                    sportcourseview.ItemsSource = blv;
-                }
-                else
-                {
-                    MessageBox.Show("请输入六位数的课程编号!");
-                    Reset();
-                    return;
-                }
-            }
-            else if (nameBTN.IsChecked == true)
-            {
-                if (txt.Length == 2 || txt.Length == 3)
-                {
-                    IBindingListView blv = view.DefaultView;
-                    blv.Filter = "SportCourseName = '" + txt + "'";
-                    sportcourseview.ItemsSource = blv;
-                }
-                else
-                {
-                    MessageBox.Show("请输入正确的课程名称!");
-                    Reset();
-                    return;
-                }
-            }
-            else
-            {
-                MessageBox.Show("请选择要查询的类型!");
-                return;
-            }
+            sportcourseview.ItemsSource = querydt.DefaultView;
         }
 
         /// <summary>
@@ -686,9 +699,9 @@ namespace sports_course
         private void Reset()
         {
             query.Text = null;
-            IBindingListView blv = view.DefaultView;
-            blv.Filter = null;
-            sportcourseview.ItemsSource = blv;
+            //IBindingListView blv = view.DefaultView;
+            //blv.Filter = null;
+            sportcourseview.ItemsSource = view.DefaultView;
         }
 
         #endregion

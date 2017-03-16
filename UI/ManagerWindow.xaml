@@ -43,11 +43,9 @@
                         <Grid Background="#FFE5E5E5">
                             <StackPanel>
                                 <WrapPanel>
-                                    <TextBlock Margin="5" VerticalAlignment="Center" TextAlignment="Center">请输入要查询的体育选课的</TextBlock>
-                                    <RadioButton x:Name="noBTN" Margin="5" Content="编号 /" VerticalAlignment="Center"/>
-                                    <RadioButton x:Name="nameBTN" Margin="5" Content="名称 :" VerticalAlignment="Center"/>
-                                    <TextBox Margin="5" Name="query" Width="100" MaxLength="6" VerticalAlignment="Center"/>
-                                    <Button Margin="5" Name="quertBTN" Click="quertBTN_Click">查询</Button>
+                                    <TextBlock Margin="5" VerticalAlignment="Center" TextAlignment="Center">请输入要查询的体育选课信息 :</TextBlock>
+                                    <TextBox Margin="5" Name="query" Width="100" MaxLength="8" VerticalAlignment="Center"/>
+                                    <Button Margin="5" Name="queryBTN" Click="queryBTN_Click">查询</Button>
                                     <Button Margin="5" Name="resetBTN" Click="resetBTN_Click">重置</Button>
                                     <Button Margin="5" Name="exportBTN" Click="exportBTN_Click">导出</Button>
                                 </WrapPanel>
