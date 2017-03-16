@@ -460,85 +460,108 @@ namespace sports_course
 
             for (int j = 0; j < waw.Length; j++)
             {
-                if (waw[j] == "11")
+                switch (waw[j])
                 {
-                    D1C1.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "12")
-                {
-                    D1C2.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "13")
-                {
-                    D1C3.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "14")
-                {
-                    D1C4.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "21")
-                {
-                    D2C1.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "22")
-                {
-                    D2C2.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "23")
-                {
-                    D2C3.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "24")
-                {
-                    D2C4.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "31")
-                {
-                    D3C1.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "32")
-                {
-                    D3C2.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "33")
-                {
-                    D3C3.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "34")
-                {
-                    D3C4.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "41")
-                {
-                    D4C1.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "42")
-                {
-                    D4C2.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "43")
-                {
-                    D4C3.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "44")
-                {
-                    D4C4.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "51")
-                {
-                    D5C1.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "52")
-                {
-                    D5C2.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "53")
-                {
-                    D5C3.Text = coursename[j].Trim();
-                }
-                else if (waw[j] == "54")
-                {
-                    D5C4.Text = coursename[j].Trim();
+                    case "11":
+                        {
+                            D1C1.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "12":
+                        {
+                            D1C2.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "13":
+                        {
+                            D1C3.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "14":
+                        {
+                            D1C4.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "21":
+                        {
+                            D2C1.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "22":
+                        {
+                            D2C2.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "23":
+                        {
+                            D2C3.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "24":
+                        {
+                            D2C4.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "31":
+                        {
+                            D3C1.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "32":
+                        {
+                            D3C2.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "33":
+                        {
+                            D3C3.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "34":
+                        {
+                            D3C4.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "41":
+                        {
+                            D4C1.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "42":
+                        {
+                            D4C2.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "43":
+                        {
+                            D4C3.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "44":
+                        {
+                            D4C4.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "51":
+                        {
+                            D5C1.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "52":
+                        {
+                            D5C2.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "53":
+                        {
+                            D5C3.Text = coursename[j].Trim();
+                            break;
+                        }
+                    case "54":
+                        {
+                            D5C4.Text = coursename[j].Trim();
+                            break;
+                        }
                 }
             }
             #endregion
