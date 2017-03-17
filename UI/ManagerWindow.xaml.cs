@@ -29,7 +29,6 @@ namespace sports_course
         List<BLL.CoursecControl> control = new List<BLL.CoursecControl>();
         List<DB.TblSportCourse> sportcourse = new List<DB.TblSportCourse>();
         List<BLL.SSCCompare> result = new List<BLL.SSCCompare>();
-        List<int> ssno = new List<int>();
 
         DataTable dt = new DataTable();//StudentSportCourse的datatable
         DataTable view = new DataTable();//ViewStudentSportCourse

@@ -32,6 +32,7 @@ namespace sports_course
         List<DB.TblStudentSportCourse> SScourse = new List<DB.TblStudentSportCourse>();
         List<DB.TblChangeCourse> changec = new List<DB.TblChangeCourse>();
         List<DB.TblConfirmCourse> confirmc = new List<DB.TblConfirmCourse>();
+        List<string> sportcoursename = new List<string>();//存放课程名
 
         DataTable dt = new DataTable();//sportcourse的datatable
         DataTable viewchange = new DataTable();//ViewStudentChangeCourse的datatable
@@ -215,6 +216,8 @@ namespace sports_course
                 {
                     studentsportcourseno = viewSSC[j].Sportcourseno;
                     studentsportcoursewaw = viewSSC[j].Weekandwhen.ToString().Trim();
+                    string sportcoursename = viewSSC[j].Sportcoursename.ToString().Trim();
+                    InsertToTimeTable(studentsportcoursewaw, sportcoursename);
                     string waw = BLL.JudgeWAW.Judge(studentsportcoursewaw);
                     sportcourseinfo.Text = viewSSC[j].Sportcoursename.ToString().Trim() + " | " + waw;
                     changecourseinfo.Text = studentsportcourseno.ToString().Trim() + " | " + viewSSC[j].Sportcoursename.ToString().Trim() + " | " + waw;
@@ -279,6 +282,7 @@ namespace sports_course
                             int studentmajor = GetStudentMajorNo();
                             AddSportCourse(studentmajor, 2);
                             AddChosen();
+                            AddComboBox();
                         }
                         else
                         {
@@ -439,134 +443,139 @@ namespace sports_course
             return studentmajor;
         }
 
+        #endregion
+
+        #region 课表操作
+
         /// <summary>
-        /// 添加学生课表信息
+        /// 获取周几第几节的赋值
         /// </summary>
         private void AddStudentCourse(int studentmajor)
         {
-            #region 获取周几第几节的赋值
-
-            string[] waw = new string[majorcourse.Count];
-            string[] coursename = new string[majorcourse.Count];
-
             for (int i = 0; i < majorcourse.Count; i++)
             {
                 if (studentmajor == majorcourse[i].Majorno)
                 {
-                    waw[i] = majorcourse[i].Weekandwhen.Trim();
-                    coursename[i] = majorcourse[i].Maincoursename.Trim();
+                    string waw = majorcourse[i].Weekandwhen.Trim();
+                    string coursename = majorcourse[i].Maincoursename.Trim();
+                    InsertToTimeTable(waw, coursename);
                 }
             }
-
-            for (int j = 0; j < waw.Length; j++)
-            {
-                switch (waw[j])
-                {
-                    case "11":
-                        {
-                            D1C1.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "12":
-                        {
-                            D1C2.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "13":
-                        {
-                            D1C3.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "14":
-                        {
-                            D1C4.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "21":
-                        {
-                            D2C1.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "22":
-                        {
-                            D2C2.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "23":
-                        {
-                            D2C3.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "24":
-                        {
-                            D2C4.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "31":
-                        {
-                            D3C1.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "32":
-                        {
-                            D3C2.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "33":
-                        {
-                            D3C3.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "34":
-                        {
-                            D3C4.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "41":
-                        {
-                            D4C1.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "42":
-                        {
-                            D4C2.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "43":
-                        {
-                            D4C3.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "44":
-                        {
-                            D4C4.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "51":
-                        {
-                            D5C1.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "52":
-                        {
-                            D5C2.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "53":
-                        {
-                            D5C3.Text = coursename[j].Trim();
-                            break;
-                        }
-                    case "54":
-                        {
-                            D5C4.Text = coursename[j].Trim();
-                            break;
-                        }
-                }
-            }
-            #endregion
         }
 
+        /// <summary>
+        /// 将学生的课程信息
+        /// </summary>
+        /// <param name="waw"></param>
+        /// <param name="coursename"></param>
+        private void InsertToTimeTable(string waw, string coursename)
+        {
+            switch (waw)
+            {
+                case "11":
+                    {
+                        D1C1.Text = coursename.Trim();
+                        break;
+                    }
+                case "12":
+                    {
+                        D1C2.Text = coursename.Trim();
+                        break;
+                    }
+                case "13":
+                    {
+                        D1C3.Text = coursename.Trim();
+                        break;
+                    }
+                case "14":
+                    {
+                        D1C4.Text = coursename.Trim();
+                        break;
+                    }
+                case "21":
+                    {
+                        D2C1.Text = coursename.Trim();
+                        break;
+                    }
+                case "22":
+                    {
+                        D2C2.Text = coursename.Trim();
+                        break;
+                    }
+                case "23":
+                    {
+                        D2C3.Text = coursename.Trim();
+                        break;
+                    }
+                case "24":
+                    {
+                        D2C4.Text = coursename.Trim();
+                        break;
+                    }
+                case "31":
+                    {
+                        D3C1.Text = coursename.Trim();
+                        break;
+                    }
+                case "32":
+                    {
+                        D3C2.Text = coursename.Trim();
+                        break;
+                    }
+                case "33":
+                    {
+                        D3C3.Text = coursename.Trim();
+                        break;
+                    }
+                case "34":
+                    {
+                        D3C4.Text = coursename.Trim();
+                        break;
+                    }
+                case "41":
+                    {
+                        D4C1.Text = coursename.Trim();
+                        break;
+                    }
+                case "42":
+                    {
+                        D4C2.Text = coursename.Trim();
+                        break;
+                    }
+                case "43":
+                    {
+                        D4C3.Text = coursename.Trim();
+                        break;
+                    }
+                case "44":
+                    {
+                        D4C4.Text = coursename.Trim();
+                        break;
+                    }
+                case "51":
+                    {
+                        D5C1.Text = coursename.Trim();
+                        break;
+                    }
+                case "52":
+                    {
+                        D5C2.Text = coursename.Trim();
+                        break;
+                    }
+                case "53":
+                    {
+                        D5C3.Text = coursename.Trim();
+                        break;
+                    }
+                case "54":
+                    {
+                        D5C4.Text = coursename.Trim();
+                        break;
+                    }
+                default:
+                    break;
+            }
+        }
         #endregion
 
         #region 学生换课操作
@@ -1070,6 +1079,26 @@ namespace sports_course
 
                 grabsportcourse.ItemsSource = dt.DefaultView;
                 #endregion
+            }
+        }
+
+        /// <summary>
+        /// 添加选课名称到combobox
+        /// </summary>
+        private void AddComboBox()
+        {
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                sportcoursename.Add(dt.Rows[i]["SportCourseName"].ToString().Trim());
+            }
+
+            sportcoursename = sportcoursename.Distinct().ToList();
+
+            for (int j = 0; j < sportcoursename.Count; j++)
+            {
+                ComboBoxItem comBoxItem = new ComboBoxItem();
+                comBoxItem.Content = sportcoursename[j].ToString().Trim();
+                SCName.Items.Add(comBoxItem);    //给ComBox添加一项
             }
         }
 
@@ -1642,6 +1671,45 @@ namespace sports_course
             return IsChosen;
         }
 
+        /// <summary>
+        /// 选择名称查询
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SCName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem item = SCName.SelectedItem as ComboBoxItem;
+            if(item != null)
+            {
+                string boxname = item.Content.ToString();
+                for (int i = 0; i < sportcoursename.Count; i++)
+                {
+                    if (boxname == sportcoursename[i].ToString())
+                    {
+                        DataTable querydt = new DataTable();
+                        querydt = dt.Clone();
+                        string filter = "SportCourseName= '" + boxname + "'";
+                        DataRow[] rows = dt.Select(filter);
+                        foreach (DataRow row in rows)  // 将查询的结果添加到dt中； 
+                        {
+                            querydt.Rows.Add(row.ItemArray);
+                        }
+                        grabsportcourse.ItemsSource = querydt.DefaultView;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 重置选择
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void boxreset_Click(object sender, RoutedEventArgs e)
+        {
+            SCName.SelectedItem = null;
+            grabsportcourse.ItemsSource = dt.DefaultView;
+        }
 
         #endregion
 
@@ -2164,10 +2232,10 @@ namespace sports_course
 
 
 
-        #endregion
 
         #endregion
 
+        #endregion
 
     }
 }

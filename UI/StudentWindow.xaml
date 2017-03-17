@@ -145,6 +145,11 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
+                            <WrapPanel>
+                                <TextBlock Name="test" Margin="5" VerticalAlignment="Center" TextAlignment="Center">请选择您需要的体育选课类型 :</TextBlock>
+                                <ComboBox Name="SCName" Margin="5" SelectionChanged="SCName_SelectionChanged"></ComboBox>
+                                <Button Margin="5" Name="boxreset" HorizontalAlignment="Right" Click="boxreset_Click" >重置</Button>
+                            </WrapPanel>
                             <DataGrid Name="grabsportcourse" MaxHeight="400" Margin="5" Width="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" AlternationCount="2" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="体育课程编号" IsReadOnly="True" Binding="{Binding Path=SportCourseNo}"/>
