@@ -96,10 +96,17 @@
     <Compile Include="DB\TblStudentSportCourse.cs" />
     <Compile Include="DB\ViewMajorMainCourse.cs" />
     <Compile Include="DB\ViewStudentSportCourse.cs" />
+    <Compile Include="TimeWindow.xaml.cs">
+      <DependentUpon>TimeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\StudentWindow.xaml.cs">
       <DependentUpon>StudentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="BLL\TimeCount.cs" />
+    <Page Include="TimeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
