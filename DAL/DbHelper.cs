@@ -176,6 +176,7 @@ namespace sports_course.DAL
             cmd.Connection.Close();
             cmd.Connection = t.DbConnection;
             cmd.Transaction = t.DbTrans;
+            cmd.CommandTimeout = 60;
             int ret = cmd.ExecuteNonQuery();
             return ret;
         }

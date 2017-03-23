@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Data.Common;
 using System.Data;
 using sports_course.DAL;
+using System.Timers;
 
 namespace sports_course
 {
@@ -1617,7 +1618,7 @@ namespace sports_course
                 }
             }
         }
-      
+
         #endregion
 
         #endregion
@@ -1720,6 +1721,8 @@ namespace sports_course
         /// </summary>
         private void StartGrab()
         {
+
+
             int num = 0;
             DataRowView dr = (DataRowView)grabsportcourse.SelectedItem;
             int choicenumafter = (int)dr["ChoiceNumAfter"];
@@ -1755,6 +1758,7 @@ namespace sports_course
                 return;
             }
         }
+
         #endregion
 
         #region 数据库操作
