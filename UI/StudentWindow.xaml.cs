@@ -974,105 +974,108 @@ namespace sports_course
                 DataRow[] waw = dt.Select("WeekAndWhen>9");
                 foreach (DataRow row in waw)
                 {
-                    if (row["WeekAndWhen"].ToString() == "11")
+                    switch (row["WeekAndWhen"].ToString())
                     {
-                        row["WeekAndWhen"] = "周一第一节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "12")
-                    {
-                        row["WeekAndWhen"] = "周一第二节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "13")
-                    {
-                        row["WeekAndWhen"] = "周一第三节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "14")
-                    {
-                        row["WeekAndWhen"] = "周一第四节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "15")
-                    {
-                        row["WeekAndWhen"] = "周一第五节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "21")
-                    {
-                        row["WeekAndWhen"] = "周二第一节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "22")
-                    {
-                        row["WeekAndWhen"] = "周二第二节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "23")
-                    {
-                        row["WeekAndWhen"] = "周二第三节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "24")
-                    {
-                        row["WeekAndWhen"] = "周二第四节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "25")
-                    {
-                        row["WeekAndWhen"] = "周二第五节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "31")
-                    {
-                        row["WeekAndWhen"] = "周三第一节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "32")
-                    {
-                        row["WeekAndWhen"] = "周三第二节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "33")
-                    {
-                        row["WeekAndWhen"] = "周三第三节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "34")
-                    {
-                        row["WeekAndWhen"] = "周三第四节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "35")
-                    {
-                        row["WeekAndWhen"] = "周三第五节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "41")
-                    {
-                        row["WeekAndWhen"] = "周四第一节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "42")
-                    {
-                        row["WeekAndWhen"] = "周四第二节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "43")
-                    {
-                        row["WeekAndWhen"] = "周四第三节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "44")
-                    {
-                        row["WeekAndWhen"] = "周四第四节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "45")
-                    {
-                        row["WeekAndWhen"] = "周四第五节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "51")
-                    {
-                        row["WeekAndWhen"] = "周五第一节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "52")
-                    {
-                        row["WeekAndWhen"] = "周五第二节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "53")
-                    {
-                        row["WeekAndWhen"] = "周五第三节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "54")
-                    {
-                        row["WeekAndWhen"] = "周五第四节";
-                    }
-                    else if (row["WeekAndWhen"].ToString() == "55")
-                    {
-                        row["WeekAndWhen"] = "周五第五节";
+                        case "11":
+                            {
+                                row["WeekAndWhen"] = "周一第一节";
+                                break;
+                            }
+                        case "12":
+                            {
+                                row["WeekAndWhen"] = "周一第二节";
+                                break;
+                            }
+                        case "13":
+                            {
+                                row["WeekAndWhen"] = "周一第三节";
+                                break;
+                            }
+                        case "14":
+                            {
+                                row["WeekAndWhen"] = "周一第四节";
+                                break;
+                            }
+                        case "21":
+                            {
+                                row["WeekAndWhen"] = "周二第一节";
+                                break;
+                            }
+                        case "22":
+                            {
+                                row["WeekAndWhen"] = "周二第二节";
+                                break;
+                            }
+                        case "23":
+                            {
+                                row["WeekAndWhen"] = "周二第三节";
+                                break;
+                            }
+                        case "24":
+                            {
+                                row["WeekAndWhen"] = "周二第四节";
+                                break;
+                            }
+                        case "31":
+                            {
+                                row["WeekAndWhen"] = "周三第一节";
+                                break;
+                            }
+                        case "32":
+                            {
+                                row["WeekAndWhen"] = "周三第二节";
+                                break;
+                            }
+                        case "33":
+                            {
+                                row["WeekAndWhen"] = "周三第三节";
+                                break;
+                            }
+                        case "34":
+                            {
+                                row["WeekAndWhen"] = "周三第四节";
+                                break;
+                            }
+                        case "41":
+                            {
+                                row["WeekAndWhen"] = "周四第一节";
+                                break;
+                            }
+                        case "42":
+                            {
+                                row["WeekAndWhen"] = "周四第二节";
+                                break;
+                            }
+                        case "43":
+                            {
+                                row["WeekAndWhen"] = "周四第三节";
+                                break;
+                            }
+                        case "44":
+                            {
+                                row["WeekAndWhen"] = "周四第四节";
+                                break;
+                            }
+                        case "51":
+                            {
+                                row["WeekAndWhen"] = "周五第一节";
+                                break;
+                            }
+                        case "52":
+                            {
+                                row["WeekAndWhen"] = "周五第二节";
+                                break;
+                            }
+                        case "53":
+                            {
+                                row["WeekAndWhen"] = "周五第三节";
+                                break;
+                            }
+                        case "54":
+                            {
+                                row["WeekAndWhen"] = "周五第四节";
+                                break;
+                            }
                     }
                 }
 
@@ -1385,56 +1388,63 @@ namespace sports_course
         {
             int studentchoice = 3;
 
-            //返回选课控制
-            if (j == 1)
+            switch (j)
             {
-                for (int i = 0; i < student.Count; i++)
-                {
-                    if (studentno == student[i].Studentno)
+                //返回选课控制
+                case 1:
                     {
-                        studentchoice = student[i].Choicecontrol;
+                        for (int i = 0; i < student.Count; i++)
+                        {
+                            if (studentno == student[i].Studentno)
+                            {
+                                studentchoice = student[i].Choicecontrol;
+                                break;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
                         break;
                     }
-                    else
+
+                //返回换课控制
+                case 2:
                     {
-                        continue;
+                        for (int i = 0; i < student.Count; i++)
+                        {
+                            if (studentno == student[i].Studentno)
+                            {
+                                studentchoice = student[i].Changecontrol;
+                                break;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                        break;
                     }
-                }
+
+                //返回换课确认控制
+                case 3:
+                    {
+                        for (int i = 0; i < student.Count; i++)
+                        {
+                            if (studentno == student[i].Studentno)
+                            {
+                                studentchoice = student[i].Confirmcontrol;
+                                break;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                        break;
+                    }
             }
 
-            //返回换课控制
-            if (j == 2)
-            {
-                for (int i = 0; i < student.Count; i++)
-                {
-                    if (studentno == student[i].Studentno)
-                    {
-                        studentchoice = student[i].Changecontrol;
-                        break;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
-            }
-
-            //返回换课确认控制
-            if (j == 3)
-            {
-                for (int i = 0; i < student.Count; i++)
-                {
-                    if (studentno == student[i].Studentno)
-                    {
-                        studentchoice = student[i].Confirmcontrol;
-                        break;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
-            }
             return studentchoice;
         }
 
@@ -1470,7 +1480,7 @@ namespace sports_course
         /// <param name="e"></param>
         private void checkbox_Click(object sender, RoutedEventArgs e)
         {
-            //筛选出所有行
+            //打钩选中当前行
             DataRow[] True = dt.Select("IsSelected=True");
             foreach (DataRow row in True)
             {
@@ -1487,7 +1497,7 @@ namespace sports_course
                 }
             }
 
-            //筛选出所有行
+            //取消选中当前行
             DataRow[] False = dt.Select("IsSelected=False");
             foreach (DataRow row in False)
             {

@@ -23,72 +23,84 @@ namespace sports_course.BLL
         public static void D1(Trans t, int StudentNo, int SportCourseNo, int i)
         {
             DAL.DbHelper db = new DAL.DbHelper();
-            //插入数据到SSC
-            if (i == 1)
-            {
-                DbCommand insert = db.GetSqlStringCommond("insert into StudentSportCourse values (@StudentNo, @SportCourseNo, @SSChoice)");
 
-                db.AddInParameter(insert, "@StudentNo", DbType.Int32, StudentNo);
-                db.AddInParameter(insert, "@SportCourseNo", DbType.Int32, SportCourseNo);
-                db.AddInParameter(insert, "@SSChoice", DbType.String, "1");
-                if (t == null)
-                {
-                    db.ExecuteNonQuery(insert);
-                }
-                else
-                {
-                    db.ExecuteNonQuery(insert, t);
-                }
+            switch (i)
+            {
 
-            }
-            //更新SSC中学生换课中状态
-            else if (i == 2)
-            {
-                DbCommand updateSSC = db.GetSqlStringCommond("update StudentSportCourse set SSChoice= @SSChoice where StudentNo= @StudentNo and SportCourseNo= @SportCourseNo");
-                db.AddInParameter(updateSSC, "@StudentNo", DbType.Int32, StudentNo);
-                db.AddInParameter(updateSSC, "@SportCourseNo", DbType.Int32, SportCourseNo);
-                db.AddInParameter(updateSSC, "@SSChoice", DbType.String, "2");
-                if (t == null)
-                {
-                    db.ExecuteNonQuery(updateSSC);
-                }
-                else
-                {
-                    db.ExecuteNonQuery(updateSSC, t);
-                }
-            }
-            //更新SSC中学生换课成功状态
-            else if (i == 3)
-            {
-                DbCommand updateSSC = db.GetSqlStringCommond("update StudentSportCourse set SSChoice= @SSChoice where StudentNo= @StudentNo and SportCourseNo= @SportCourseNo");
-                db.AddInParameter(updateSSC, "@StudentNo", DbType.Int32, StudentNo);
-                db.AddInParameter(updateSSC, "@SportCourseNo", DbType.Int32, SportCourseNo);
-                db.AddInParameter(updateSSC, "@SSChoice", DbType.String, "1");
-                if (t == null)
-                {
-                    db.ExecuteNonQuery(updateSSC);
-                }
-                else
-                {
-                    db.ExecuteNonQuery(updateSSC, t);
-                }
-            }
+                //插入数据到SSC
+                case 1:
+                    {
+                        DbCommand insert = db.GetSqlStringCommond("insert into StudentSportCourse values (@StudentNo, @SportCourseNo, @SSChoice)");
 
-            //更新SSC中学生退课
-            else if (i == 4)
-            {
-                DbCommand updateSSC = db.GetSqlStringCommond("update StudentSportCourse set SSChoice= @SSChoice where StudentNo= @StudentNo and SportCourseNo= @SportCourseNo");
-                db.AddInParameter(updateSSC, "@StudentNo", DbType.Int32, StudentNo);
-                db.AddInParameter(updateSSC, "@SportCourseNo", DbType.Int32, SportCourseNo);
-                db.AddInParameter(updateSSC, "@SSChoice", DbType.String, "3");
-                if (t == null)
-                {
-                    db.ExecuteNonQuery(updateSSC);
-                }
-                else
-                {
-                    db.ExecuteNonQuery(updateSSC, t);
-                }
+                        db.AddInParameter(insert, "@StudentNo", DbType.Int32, StudentNo);
+                        db.AddInParameter(insert, "@SportCourseNo", DbType.Int32, SportCourseNo);
+                        db.AddInParameter(insert, "@SSChoice", DbType.String, "1");
+                        if (t == null)
+                        {
+                            db.ExecuteNonQuery(insert);
+                        }
+                        else
+                        {
+                            db.ExecuteNonQuery(insert, t);
+                        }
+                        break;
+                    }
+
+                //更新SSC中学生换课中状态
+                case 2:
+                    {
+                        DbCommand updateSSC = db.GetSqlStringCommond("update StudentSportCourse set SSChoice= @SSChoice where StudentNo= @StudentNo and SportCourseNo= @SportCourseNo");
+                        db.AddInParameter(updateSSC, "@StudentNo", DbType.Int32, StudentNo);
+                        db.AddInParameter(updateSSC, "@SportCourseNo", DbType.Int32, SportCourseNo);
+                        db.AddInParameter(updateSSC, "@SSChoice", DbType.String, "2");
+                        if (t == null)
+                        {
+                            db.ExecuteNonQuery(updateSSC);
+                        }
+                        else
+                        {
+                            db.ExecuteNonQuery(updateSSC, t);
+                        }
+                        break;
+                    }
+
+                //更新SSC中学生换课成功状态
+                case 3:
+                    {
+                        DbCommand updateSSC = db.GetSqlStringCommond("update StudentSportCourse set SSChoice= @SSChoice where StudentNo= @StudentNo and SportCourseNo= @SportCourseNo");
+                        db.AddInParameter(updateSSC, "@StudentNo", DbType.Int32, StudentNo);
+                        db.AddInParameter(updateSSC, "@SportCourseNo", DbType.Int32, SportCourseNo);
+                        db.AddInParameter(updateSSC, "@SSChoice", DbType.String, "1");
+                        if (t == null)
+                        {
+                            db.ExecuteNonQuery(updateSSC);
+                        }
+                        else
+                        {
+                            db.ExecuteNonQuery(updateSSC, t);
+                        }
+                        break;
+                    }
+
+                //更新SSC中学生退课
+                case 4:
+                    {
+                        DbCommand updateSSC = db.GetSqlStringCommond("update StudentSportCourse set SSChoice= @SSChoice where StudentNo= @StudentNo and SportCourseNo= @SportCourseNo");
+                        db.AddInParameter(updateSSC, "@StudentNo", DbType.Int32, StudentNo);
+                        db.AddInParameter(updateSSC, "@SportCourseNo", DbType.Int32, SportCourseNo);
+                        db.AddInParameter(updateSSC, "@SSChoice", DbType.String, "3");
+                        if (t == null)
+                        {
+                            db.ExecuteNonQuery(updateSSC);
+                        }
+                        else
+                        {
+                            db.ExecuteNonQuery(updateSSC, t);
+                        }
+                        break;
+                    }
+                default:
+                    break;
             }
         }
 
@@ -152,25 +164,37 @@ namespace sports_course.BLL
             DAL.DbHelper db = new DAL.DbHelper();
             DbCommand updateCC = db.GetSqlStringCommond("update ChangeCourse set ChangeChoice= @ChangeChoice where ChangeNo= @ChangeNo");
             db.AddInParameter(updateCC, "@ChangeNo", DbType.Int32, studentchangeno);
-            //更新换课表之已收到换课确认请求
-            if (i == 1)
+
+            switch (i)
             {
-                db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "1");
-            }
-            //更新换课表之已接受换课确认请求
-            else if (i == 2)
-            {
-                db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "2");
-            }
-            //更新换课表之已拒绝换课确认请求
-            else if (i == 3)
-            {
-                db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "3");
-            }
-            //更新换课表之已撤回换课确认请求
-            else if (i == 0)
-            {
-                db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "0");
+
+                //更新换课表之已收到换课确认请求
+                case 1:
+                    {
+                        db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "1");
+                        break;
+                    }
+
+                //更新换课表之已接受换课确认请求
+                case 2:
+                    {
+                        db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "2");
+                        break;
+                    }
+
+                //更新换课表之已拒绝换课确认请求
+                case 3:
+                    {
+                        db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "3");
+                        break;
+                    }
+
+                //更新换课表之已撤回换课确认请求
+                case 0:
+                    {
+                        db.AddInParameter(updateCC, "@ChangeChoice", DbType.String, "0");
+                        break;
+                    }
             }
             if (t == null)
             {
@@ -257,22 +281,75 @@ namespace sports_course.BLL
         }
 
         /// <summary>
-        /// 更新选课控制的选课状态
+        /// 更新选课状态
         /// </summary>
         /// <param name="t"></param>
-        public static void D6(Trans t)
+        /// <param name="i"></param>
+        /// <param name="choicenum"></param>
+        public static int D6(Trans t, int i, int choicenum)
         {
-            DAL.DbHelper db = new DAL.DbHelper();
-            DbCommand updateChoice = db.GetSqlStringCommond("update CourseControl set ChoiceControl=" + 2);
+            int result = 0;
 
-            if (t == null)
+            DAL.DbHelper db = new DAL.DbHelper();
+            switch (i)
             {
-                db.ExecuteNonQuery(updateChoice);
+
+                //更新选课状态之选课
+                case 1:
+                    {
+                        DbCommand updateChoice = db.GetSqlStringCommond("update CourseControl set ChoiceControl=" + choicenum);
+                        if (t == null)
+                        {
+                            db.ExecuteNonQuery(updateChoice);
+                            result = 1;
+                        }
+                        else
+                        {
+                            db.ExecuteNonQuery(updateChoice, t);
+                            result = 1;
+                        }
+                        break;
+                    }
+
+                //更新选课状态之抢课
+                case 2:
+                    {
+                        DbCommand updateChoice = db.GetSqlStringCommond("update CourseControl set GrabControl=" + choicenum);
+                        if (t == null)
+                        {
+                            db.ExecuteNonQuery(updateChoice);
+                            result = 1;
+                        }
+                        else
+                        {
+                            db.ExecuteNonQuery(updateChoice, t);
+
+                            result = 1;
+                        }
+                        break;
+                    }
+
+                //更新选课状态之换课
+                case 3:
+                    {
+                        DbCommand updateChoice = db.GetSqlStringCommond("update CourseControl set ChangeControl=" + choicenum);
+                        if (t == null)
+                        {
+                            db.ExecuteNonQuery(updateChoice);
+                            result = 1;
+                        }
+                        else
+                        {
+                            db.ExecuteNonQuery(updateChoice, t);
+                            result = 1;
+                        }
+                        break;
+                    }
+                default:
+                    break;
             }
-            else
-            {
-                db.ExecuteNonQuery(updateChoice, t);
-            }
+
+            return result;
         }
 
         /// <summary>

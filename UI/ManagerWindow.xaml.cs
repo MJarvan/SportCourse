@@ -350,20 +350,14 @@ namespace sports_course
         {
             string item = ((Button)sender).Name;
 
-            //数据库操作
-            DAL.DbHelper db = new DAL.DbHelper();
-            DbCommand updateChoice = db.GetSqlStringCommond("update CourseControl set ChoiceControl=" + control[0].Choicecontrol);
-            DbCommand updateGrab = db.GetSqlStringCommond("update CourseControl set GrabControl=" + control[0].Grabcontrol);
-            DbCommand updateChange = db.GetSqlStringCommond("update CourseControl set ChangeControl=" + control[0].Changecontrol);
+            DAL.Trans t = new Trans();
 
             switch(item)
             {
                 case "OpenChoice":
                     {
                         control[0].Choicecontrol = 1;
-                        //update [表名] set [字段名]=[值] Where [条件]
-                        //"update CourseControl set ChoiceControl=' "+control[0].Choicecontrol+" '";
-                        int i = db.ExecuteNonQuery(updateChoice);
+                        int i = BLL.DoBussiness.D6(t, 1, control[0].Choicecontrol);
                         if (i > 0)
                         {
                             MessageBox.Show("开放选课成功!");
@@ -377,7 +371,7 @@ namespace sports_course
                 case "CloseChoice":
                     {
                         control[0].Choicecontrol = 0;
-                        int i = db.ExecuteNonQuery(updateChoice);
+                        int i = BLL.DoBussiness.D6(t, 1, control[0].Choicecontrol);
                         if (i > 0)
                         {
                             MessageBox.Show("关闭选课成功!");
@@ -391,7 +385,7 @@ namespace sports_course
                 case "OpenGrab":
                     {
                         control[0].Grabcontrol = 1;
-                        int i = db.ExecuteNonQuery(updateGrab);
+                        int i = BLL.DoBussiness.D6(t, 2, control[0].Grabcontrol);
                         if (i > 0)
                         {
                             MessageBox.Show("开放抢课成功!");
@@ -405,7 +399,7 @@ namespace sports_course
                 case "CloseGrab":
                     {
                         control[0].Grabcontrol = 0;
-                        int i = db.ExecuteNonQuery(updateGrab);
+                        int i = BLL.DoBussiness.D6(t, 2, control[0].Grabcontrol);
                         if (i > 0)
                         {
                             MessageBox.Show("关闭抢课成功!");
@@ -419,7 +413,7 @@ namespace sports_course
                 case "OpenChange":
                     {
                         control[0].Changecontrol = 1;
-                        int i = db.ExecuteNonQuery(updateChange);
+                        int i = BLL.DoBussiness.D6(t, 3, control[0].Changecontrol);
                         if (i > 0)
                         {
                             MessageBox.Show("开放换课成功!");
@@ -433,7 +427,7 @@ namespace sports_course
                 case "CloseChange":
                     {
                         control[0].Changecontrol = 0;
-                        int i = db.ExecuteNonQuery(updateChange);
+                        int i = BLL.DoBussiness.D6(t, 3, control[0].Changecontrol);
                         if (i > 0)
                         {
                             MessageBox.Show("关闭换课成功!");
@@ -530,7 +524,7 @@ namespace sports_course
                 {
                     BLL.DoBussiness.D1(t, StudentNo, SportCourseNo, 3);
                     BLL.DoBussiness.D5(t, SportCourseNo,1);
-                    BLL.DoBussiness.D6(t);
+                    BLL.DoBussiness.D6(t, 1, 2);
                     i = 1;
                     t.Commit();
                 }
