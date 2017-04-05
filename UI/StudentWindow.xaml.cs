@@ -351,11 +351,11 @@ namespace sports_course
         {
             if ((MessageBox.Show("是否注销?", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes))//如果点击“确定”按钮
             {
-                //要删除这两句话(测试用)
-                {
-                    BLL.StudentSportChoiceNo.SportcoursenoA = 0;
-                    BLL.StudentSportChoiceNo.SportcoursenoB = 0;
-                }
+                ////要删除这两句话(测试用)
+                //{
+                //    BLL.StudentSportChoiceNo.SportcoursenoA = 0;
+                //    BLL.StudentSportChoiceNo.SportcoursenoB = 0;
+                //}
                 LoginWindow login = new LoginWindow();
                 login.Show();
                 this.Close();
@@ -749,7 +749,7 @@ namespace sports_course
                     int StudentNo_A = changec[i].Studentno_A;
                     string ChangeChoice = changec[i].Changechoice.Trim();
                     int minute = BLL.TimeCount.time(changec[i].Changecreatetime);
-                    if (studentno == StudentNo_A && ChangeChoice == "1" && ConfirmChoice == "0" && minute > 10)
+                    if (studentno == StudentNo_A && ChangeChoice == "1" && ConfirmChoice == "0" && minute > 15)
                     {
                         int num = 0;
 
@@ -772,7 +772,7 @@ namespace sports_course
                 }
 
                 //删掉超时的失效记录
-                if (ConfirmChoice == "0" && time > 5)
+                if (ConfirmChoice == "0" && time > 10)
                 {
                     viewconfirm.Rows[0].Delete();
                 }
@@ -790,7 +790,7 @@ namespace sports_course
                 string ConfirmChoice = confirmc[0].Confirmchoice.Trim();
                 int minute = BLL.TimeCount.time(confirmc[0].Confirmcreatetime);
 
-                if (studentno == StudentNo_B && ConfirmChoice == "0" && minute > 1)
+                if (studentno == StudentNo_B && ConfirmChoice == "0" && minute > 15)
                 {
                     int num = 0;
 
@@ -798,7 +798,7 @@ namespace sports_course
                     num = num + DoRecallBussiness(ChangeNo, 3);
                     if (num == 2)
                     {
-                        MessageBox.Show("由于没有人回应您的请求,系统已经帮您撤回!");
+                        MessageBox.Show("由于没有人回应您的换课确认请求,系统已经帮您撤回!");
                         AddChosen();
                         AddInterface();
                         viewcourse.IsSelected = true;
@@ -814,11 +814,12 @@ namespace sports_course
             {
                 for (int i = 0; i < changec.Count; i++)
                 {
+                    int a = 0;
                     int ChangeNo = changec[i].Changeno;
                     int StudentNo_A = changec[i].Studentno_A;
                     string ChangeChoice = changec[i].Changechoice.Trim();
                     int minute = BLL.TimeCount.time(changec[i].Changecreatetime);
-                    if (studentno == StudentNo_A && ChangeChoice == "0" && minute > 10)
+                    if (studentno == StudentNo_A && ChangeChoice == "0" && minute > 15)
                     {
                         int num = 0;
 
@@ -826,7 +827,7 @@ namespace sports_course
 
                         if (num == 1)
                         {
-                            MessageBox.Show("由于没有人回应您的请求,系统已经帮您撤回!");
+                            MessageBox.Show("由于没有人回应您的换课请求,系统已经帮您撤回!");
                             AddChosen();
                             AddInterface();
                             viewcourse.IsSelected = true;
@@ -839,9 +840,10 @@ namespace sports_course
                         break;
                     }
                     //删掉超时的失效记录
-                    if (ChangeChoice == "0" && minute > 5)
+                    if (ChangeChoice == "0" && minute > 10)
                     {
-                        viewchange.Rows[i].Delete();
+                        viewchange.Rows[a].Delete();
+                        a++;
                     }
                 }
                 viewchange.AcceptChanges();
@@ -1759,6 +1761,8 @@ namespace sports_course
                 MessageBox.Show("抢课成功!");
                 int studentmajor = GetStudentMajorNo();
                 AddSportCourse(studentmajor, 2);
+                AddChosen();
+                AddInterface();
                 viewcourse.IsSelected = true;
                 grab.Visibility = Visibility.Collapsed;
             }
@@ -1993,7 +1997,7 @@ namespace sports_course
 
             if (num == 1)
             {
-                MessageBox.Show("发送换课确认成功!");
+                MessageBox.Show("换课确认请求发送成功!");
                 AddChosen();
                 AddInterface();
                 viewcourse.IsSelected = true;
@@ -2002,7 +2006,7 @@ namespace sports_course
             }
             else
             {
-                MessageBox.Show("发送换课确认失败!");
+                MessageBox.Show("换课确认请求发送失败!");
                 return;
             }
         }
@@ -2177,6 +2181,10 @@ namespace sports_course
             {
                 MessageBox.Show("拒绝成功!");
                 AddConfirm();
+                AddChosen();
+                AddInterface();
+                viewcourse.IsSelected = true;
+                change.Visibility = Visibility.Collapsed;
                 return;
             }
             else

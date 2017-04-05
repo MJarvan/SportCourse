@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:sports_course"
         Icon="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\course.ico"
         mc:Ignorable="d"
-        Title="ManagerWindow" MaxHeight="360" MaxWidth="640" Height="360" Width="640" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="管理员用窗口" MaxHeight="360" MaxWidth="640" Height="360" Width="640" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid>
         <StackPanel>
             <Grid>
@@ -15,18 +15,6 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Menu Grid.Column="0" x:Name="menu" Height="Auto" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FF1D2874">
-                    <MenuItem Header="课程管理">
-                        <MenuItem Header="选课">
-                        </MenuItem>
-                        <Separator />
-
-                        <MenuItem Header="抢课">
-                        </MenuItem>
-                        <Separator />
-
-                        <MenuItem Header="换课">
-                        </MenuItem>
-                    </MenuItem>
                     <MenuItem Name="return" Header="注销" Click="return_Click"></MenuItem>
                     <MenuItem Name="shutdown" Header="退出系统" Click="shutdown_Click"></MenuItem>
                 </Menu>
@@ -43,7 +31,7 @@
                         <Grid Background="#FFE5E5E5">
                             <StackPanel>
                                 <WrapPanel>
-                                    <TextBlock Margin="5" VerticalAlignment="Center" TextAlignment="Center">请输入要查询的体育选课信息 :</TextBlock>
+                                    <TextBlock Margin="5" Name="querytxt" VerticalAlignment="Center" TextAlignment="Center">请输入要查询的体育选课信息 :</TextBlock>
                                     <TextBox Margin="5" Name="query" Width="100" MaxLength="8" VerticalAlignment="Center"/>
                                     <Button Margin="5" Name="queryBTN" Click="queryBTN_Click">查询</Button>
                                     <Button Margin="5" Name="resetBTN" Click="resetBTN_Click">重置</Button>

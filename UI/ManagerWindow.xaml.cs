@@ -159,6 +159,10 @@ namespace sports_course
                         SSC_Loaded();
                         Random.Visibility = Visibility.Collapsed;
                         DropCourse.Visibility = Visibility.Visible;
+                        querytxt.Visibility = Visibility.Visible;
+                        query.Visibility = Visibility.Visible;
+                        queryBTN.Visibility = Visibility.Visible;
+                        resetBTN.Visibility = Visibility.Visible;
                         exportBTN.Visibility = Visibility.Visible;
                         OpenChoice.Visibility = Visibility.Collapsed;
                         CloseChoice.Visibility = Visibility.Collapsed;
@@ -168,6 +172,10 @@ namespace sports_course
                     {
                         Random.Visibility = Visibility.Visible;
                         DropCourse.Visibility = Visibility.Collapsed;
+                        querytxt.Visibility = Visibility.Collapsed;
+                        query.Visibility = Visibility.Collapsed;
+                        queryBTN.Visibility = Visibility.Collapsed;
+                        resetBTN.Visibility = Visibility.Collapsed;
                         exportBTN.Visibility = Visibility.Collapsed;
                         OpenChoice.Visibility = Visibility.Collapsed;
                         CloseChoice.Visibility = Visibility.Visible;
@@ -177,6 +185,10 @@ namespace sports_course
                     {
                         Random.Visibility = Visibility.Collapsed;
                         DropCourse.Visibility = Visibility.Collapsed;
+                        querytxt.Visibility = Visibility.Collapsed;
+                        query.Visibility = Visibility.Collapsed;
+                        queryBTN.Visibility = Visibility.Collapsed;
+                        resetBTN.Visibility = Visibility.Collapsed;
                         exportBTN.Visibility = Visibility.Collapsed;
                         OpenChoice.Visibility = Visibility.Visible;
                         CloseChoice.Visibility = Visibility.Collapsed;
@@ -439,6 +451,7 @@ namespace sports_course
                         break;
                     }
             }
+            t.Commit();
             Judge();
             Set();
         }

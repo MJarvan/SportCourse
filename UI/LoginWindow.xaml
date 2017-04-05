@@ -7,17 +7,17 @@
         xmlns:local="clr-namespace:sports_course"
         Icon="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\course.ico"
         mc:Ignorable="d"
-        Title="LoginWindow" MinHeight="270" MaxHeight="270" Height="270" MinWidth="480" MaxWidth="480" Width="480" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="登录" MinHeight="270" MaxHeight="270" Height="270" MinWidth="480" MaxWidth="480" Width="480" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid Name="grid">
         <Image Source="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\bw.jpg" Stretch="Fill"/>
         <StackPanel Name="main" HorizontalAlignment="Center" Height="Auto" Width="300" VerticalAlignment="Center">
-            <TextBlock  Name="studentcourse" Width="300" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center" TextAlignment="Center" FontSize="26" >
+            <TextBlock  Name="studentcourse" Width="300" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center" TextAlignment="Center" FontSize="24" >
                 <TextBlock.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF0D1CD9" Offset="0"/>
                         <GradientStop Color="#FF7BC4FA" Offset="1"/>
                     </LinearGradientBrush>
-                </TextBlock.Background>广财大学生选课系统</TextBlock>
+                </TextBlock.Background>广财大学生体育选课系统</TextBlock>
             <WrapPanel>
                 <TextBlock  Margin="20,5,20,5" FontSize="20" TextAlignment="Center">账号:</TextBlock>
                 <TextBox Margin="0,5,20,5" Name="No" FontSize="20" Width="180" MaxLength="8" InputMethod.PreferredImeState="Off" InputMethod.IsInputMethodEnabled="False"></TextBox>
