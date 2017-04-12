@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:sports_course"
         xmlns:res="clr-namespace:sports_course.Properties"
-        Icon="{x:Static res:Resources.course}"
+        Icon="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\course.ico"
         mc:Ignorable="d"
         Title="管理员用窗口" MaxHeight="360" MaxWidth="640" Height="360" Width="640" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid>

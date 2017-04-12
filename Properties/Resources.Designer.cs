@@ -61,29 +61,32 @@ namespace sports_course.Properties {
         }
         
         /// <summary>
-        ///   查找类似 C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\bw.jpg 的本地化字符串。
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        public static string bw {
+        public static System.Drawing.Bitmap bw {
             get {
-                return ResourceManager.GetString("bw", resourceCulture);
+                object obj = ResourceManager.GetObject("bw", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   查找类似 C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\close.png 的本地化字符串。
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        public static string close {
+        public static System.Drawing.Bitmap close {
             get {
-                return ResourceManager.GetString("close", resourceCulture);
+                object obj = ResourceManager.GetObject("close", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   查找类似 C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\course.ico 的本地化字符串。
+        ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        public static string course {
+        public static System.Drawing.Icon course {
             get {
-                return ResourceManager.GetString("course", resourceCulture);
+                object obj = ResourceManager.GetObject("course", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

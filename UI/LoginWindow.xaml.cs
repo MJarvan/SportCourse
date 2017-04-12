@@ -146,6 +146,7 @@ namespace sports_course
                 if (checkmanagerno == manager[i].Managerno.ToString().Trim())
                 {
                     password = manager[i].Managerpassword.ToString().Trim();
+                    break;
                 }
                 else
                 {
@@ -171,6 +172,7 @@ namespace sports_course
                 if (checkstudentno == student[i].Studentno)
                 {
                     password = student[i].Studentpassword.ToString().Trim();
+                    break;
                 }
                 else
                 {
