@@ -155,9 +155,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\bw.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Image\close.png" />
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +191,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\bw.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
