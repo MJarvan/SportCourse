@@ -22,7 +22,7 @@ namespace sports_course.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace sports_course.Properties {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("sports_course.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace sports_course.Properties {
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace sports_course.Properties {
         /// <summary>
         ///   查找类似 C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\bw.jpg 的本地化字符串。
         /// </summary>
-        internal static string bw {
+        public static string bw {
             get {
                 return ResourceManager.GetString("bw", resourceCulture);
             }
@@ -72,9 +72,18 @@ namespace sports_course.Properties {
         /// <summary>
         ///   查找类似 C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\close.png 的本地化字符串。
         /// </summary>
-        internal static string close {
+        public static string close {
             get {
                 return ResourceManager.GetString("close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\course.ico 的本地化字符串。
+        /// </summary>
+        public static string course {
+            get {
+                return ResourceManager.GetString("course", resourceCulture);
             }
         }
     }

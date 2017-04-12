@@ -4,12 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:input="clr-namespace:System.Windows.Input;assembly=PresentationCore"
+        xmlns:res="clr-namespace:sports_course.Properties"
         xmlns:local="clr-namespace:sports_course"
-        Icon="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\course.ico"
+        Icon="{x:Static res:Resources.course}"
         mc:Ignorable="d"
         Title="登录" MinHeight="270" MaxHeight="270" Height="270" MinWidth="480" MaxWidth="480" Width="480" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid Name="grid">
-        <Image Source="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\bw.jpg" Stretch="Fill"/>
+        <Image Source="{x:Static res:Resources.bw}" Stretch="Fill"/>
         <StackPanel Name="main" HorizontalAlignment="Center" Height="Auto" Width="300" VerticalAlignment="Center">
             <TextBlock  Name="studentcourse" Width="300" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center" TextAlignment="Center" FontSize="24" >
                 <TextBlock.Background>

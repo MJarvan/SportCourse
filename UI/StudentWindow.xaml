@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:res="clr-namespace:sports_course.Properties"
         xmlns:local="clr-namespace:sports_course"
-        Icon="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\course.ico"
+        Icon="{x:Static res:Resources.course}"
         mc:Ignorable="d"
         Title="学生用窗口" MaxHeight="525" MaxWidth="700"  Height="525" Width="700" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid>
@@ -95,7 +96,7 @@
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="Button">
                                                     <Grid>
-                                                        <Image Name="ImgBtnBg" Source="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\close.png" Stretch="Fill"/>
+                                                        <Image Name="ImgBtnBg" Source="{x:Static res:Resources.close}" Stretch="Fill"/>
                                                     </Grid>
                                                 </ControlTemplate>
                                             </Setter.Value>
@@ -137,7 +138,7 @@
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="Button">
                                                     <Grid>
-                                                        <Image Name="ImgBtnBg" Source="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\close.png" Stretch="Fill"/>
+                                                        <Image Name="ImgBtnBg" Source="{x:Static res:Resources.close}" Stretch="Fill"/>
                                                     </Grid>
                                                 </ControlTemplate>
                                             </Setter.Value>
@@ -176,7 +177,7 @@
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="Button">
                                                     <Grid>
-                                                        <Image Name="ImgBtnBg" Source="C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\close.png" Stretch="Fill"/>
+                                                        <Image Name="ImgBtnBg" Source="{x:Static res:Resources.close}" Stretch="Fill"/>
                                                     </Grid>
                                                 </ControlTemplate>
                                             </Setter.Value>

@@ -123,4 +123,7 @@
   <data name="close" xml:space="preserve">
     <value>C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\close.png</value>
   </data>
+  <data name="course" xml:space="preserve">
+    <value>C:\Users\admin\Documents\Visual Studio 2015\Projects\SportCourse\SportCourse\Image\course.ico</value>
+  </data>
 </root>
