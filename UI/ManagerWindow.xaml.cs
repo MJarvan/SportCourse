@@ -50,27 +50,10 @@ namespace sports_course
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            #region datareader添加课程控制信息
-            DAL.DbHelper db = new DAL.DbHelper();
-            DbCommand selectCC = db.GetSqlStringCommond("select * from CourseControl");
-
-
-            using (DbDataReader reader = db.ExecuteReader(selectCC))
-            {
-                while (reader.Read())
-                {
-                    BLL.CoursecControl model = new BLL.CoursecControl();
-
-                    model.Choicecontrol = reader.GetInt32(0);
-                    model.Grabcontrol = reader.GetInt32(1);
-                    model.Changecontrol = reader.GetInt32(2);
-                    control.Add(model);
-                }
-            }
-            #endregion
+            AddCourseControl();
 
             #region dataset添加学生体育选课信息
-
+            DAL.DbHelper db = new DAL.DbHelper();
             DbCommand selectSSC = db.GetSqlStringCommond("select * from StudentSportCourse");
             dt = db.ExecuteDataTable(selectSSC);
             int RowsCount = dt.Rows.Count;
@@ -110,6 +93,33 @@ namespace sports_course
 
             Set();
         }
+
+        /// <summary>
+        /// 添加课程管理信息
+        /// </summary>
+        private void AddCourseControl()
+        {
+            #region datareader添加课程控制信息
+            DAL.DbHelper db = new DAL.DbHelper();
+            DbCommand selectCC = db.GetSqlStringCommond("select * from CourseControl");
+
+
+            using (DbDataReader reader = db.ExecuteReader(selectCC))
+            {
+                while (reader.Read())
+                {
+                    BLL.CoursecControl model = new BLL.CoursecControl();
+
+                    model.Choicecontrol = reader.GetInt32(0);
+                    model.Grabcontrol = reader.GetInt32(1);
+                    model.Changecontrol = reader.GetInt32(2);
+                    control.Add(model);
+                }
+            }
+            #endregion
+        }
+
+
 
         /// <summary>
         /// 加载换课确认失效记录
@@ -470,7 +480,7 @@ namespace sports_course
             int num = 0;
             int choicenummax = 0;
             int choicenumbefore = 0;
-            //int choicenumafter = 0;
+            int choicenumafter = 0;
             int sportcourseno = 0;
             //添加课表数组
             DataRow[] dr = dt.Select("SSChoice = 0");
@@ -484,7 +494,8 @@ namespace sports_course
                         sportcourseno = (int)dt.Rows[i]["SportCourseNo"];
                         choicenummax = sportcourse[j].Choicenummax;
                         choicenumbefore = sportcourse[j].Choicenumbefore;
-                        StartRandom(sportcourseno, choicenummax, choicenumbefore);
+                        choicenumafter = sportcourse[j].Choicenumafter;
+                        StartRandom(sportcourseno, choicenummax, choicenumbefore, choicenumafter);
                     }
                 }
                 i++;
@@ -519,8 +530,9 @@ namespace sports_course
             {
                 MessageBox.Show("成功");
             }
-
+            AddCourseControl();
             Set();
+            Judge();
         }
 
         /// <summary>
@@ -550,12 +562,13 @@ namespace sports_course
         }
 
         /// <summary>
-        /// 随机算法
+        /// 判断执行随机算法
         /// </summary>
         /// <param name="sportcourseno"></param>
         /// <param name="choicenummax"></param>
         /// <param name="choicenumbefore"></param>
-        private void StartRandom(int sportcourseno, int choicenummax, int choicenumbefore)
+        /// <param name="choicenumafter"></param>
+        private void StartRandom(int sportcourseno, int choicenummax, int choicenumbefore, int choicenumafter)
         {
 
             //选出SSno进行随机筛选算法的数组
@@ -563,7 +576,11 @@ namespace sports_course
             //算法返回result的数组
             int[] b = new int[choicenummax];
 
-            if (choicenumbefore <= choicenummax)
+            if(choicenumafter >= choicenummax)
+            {
+                return;
+            }
+            else if (choicenumbefore <= choicenummax && choicenumafter < choicenummax)
             {
                 //选课人数少于选课总人数,不进行随机筛选,直接加进结果
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -580,7 +597,7 @@ namespace sports_course
                 }
 
             }
-            else
+            else if (choicenumbefore > choicenummax && choicenumafter < choicenummax)
             {
                 //选课人数多于选课总人数,进行随机筛选,a[]数组存放需要进行筛选的SSNo,b[]数组接收筛选后的数组,在加入结果
                 for (int i = 0; i < dt.Rows.Count; i++)
